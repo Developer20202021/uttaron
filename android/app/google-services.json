@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "145894825045",
+    "project_id": "uttaronapp",
+    "storage_bucket": "uttaronapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:145894825045:android:f8792d3a131fca15aa88dc",
+        "android_client_info": {
+          "package_name": "com.example.uttaron"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtca9qgQyElzVEMbjUkUrzYsE94fmhhN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
