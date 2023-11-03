@@ -304,12 +304,12 @@ Future<void> getData() async {
                   child: Container(
                        
                  decoration: BoxDecoration(
-                  color: ColorName().AppBoxBackgroundColor,
+                  color:AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"? Colors.green.shade100 : ColorName().AppBoxBackgroundColor,
      
 
                   border: Border.all(
                             width: 2,
-                            color: ColorName().AppBoxBackgroundColor
+                            color:AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"? Colors.green.shade100 :  ColorName().AppBoxBackgroundColor
                           ),
                   borderRadius: BorderRadius.circular(10)      
                  ),
@@ -354,13 +354,11 @@ Future<void> getData() async {
                                       Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
                                       Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
 
-                                      Text("Student Email: ${AllData[index]["StudentEmail"]}"),
+
 
                                       Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
                   
-                                      Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
 
-                                      Text("Type: ${AllData[index]["StudentType"]}"),
 
                                       
 
@@ -385,10 +383,15 @@ Future<void> getData() async {
 
 
                                  Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                 
                    AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"?Icon(Icons.check, color: Colors.green,):TextButton(onPressed: () async{
+
+
+                    setState(() {
+                      loading = true;
+                    });
 
 
 
@@ -445,7 +448,9 @@ Future<void> getData() async {
 
          
 
-
+              setState(() {
+                      loading = false;
+                    });
 
 
                     })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -571,6 +576,10 @@ Future<void> getData() async {
 
 
 
+              setState(() {
+                      loading = true;
+                    });
+
 
                               
                var updateData ={
@@ -623,7 +632,9 @@ Future<void> getData() async {
 
 
          
-
+            setState(() {
+                      loading = false;
+                    });
 
 
 
