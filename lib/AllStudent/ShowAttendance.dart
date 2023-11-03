@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
@@ -19,9 +20,115 @@ class _ShowAttendanceState extends State<ShowAttendance> {
 
 
 
-  List PresenceDate =[];
+  List<DateTime> PresenceDate =[];
 
-  List AbsenceDate = [];
+  List<DateTime> AbsenceDate = [];
+
+
+
+
+
+  bool loading = true;
+
+
+
+
+
+
+
+   // Firebase All Customer Data Load
+
+List  AllPresenceData = [];
+
+var Dataload = "";
+
+
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('Attendance');
+
+Future<void> getPresenceData(String StudentEmail) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("StudentEmail", isEqualTo: StudentEmail).where("type", isEqualTo: "presence");
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllPresenceData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+
+     if (AllPresenceData.isEmpty) {
+
+    setState(() {
+      
+      Dataload ="0";
+
+      loading = false;
+     });
+
+
+
+       
+     } else {
+
+
+      for (var i = 0; i < AllPresenceData.length; i++) {
+
+
+        var AttendanceDate = AllPresenceData[i]["Date"];
+
+       var AttendanceSplit = AttendanceDate.toString().split("/");
+
+
+       setState(() {
+
+        PresenceDate.insert(PresenceDate.length, DateTime(int.parse(AttendanceSplit[2]), int.parse(AttendanceSplit[1]), int.parse(AttendanceSplit[0])));
+         
+       });
+
+
+        
+      }
+
+
+
+    setState(() {
+       AllPresenceData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      loading = false;
+     });
+
+
+
+
+       
+     }
+
+
+
+
+
+
+
+
+    print(AllPresenceData);
+}
+
+
+
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+
+
+    getPresenceData(widget.StudentEmail);
+    super.initState();
+  }
 
 
 
@@ -64,7 +171,7 @@ class _ShowAttendanceState extends State<ShowAttendance> {
           view: DateRangePickerView.month,
           monthViewSettings:DateRangePickerMonthViewSettings(blackoutDates:[DateTime(2023, 11, 26), DateTime(2023, 11, 27)],
               
-              specialDates:[DateTime(2023, 11, 22),DateTime(2023, 11, 21),DateTime(2023, 11, 10)],
+              specialDates:PresenceDate,
               ),
           monthCellStyle: DateRangePickerMonthCellStyle(
             blackoutDatesDecoration: BoxDecoration(
