@@ -5,7 +5,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyExamFeeCollection.dart';
-import 'package:uttaron/AllStudent/AllDepartment.dart';
+import 'package:uttaron/GiveAttendance/AllDepartment.dart';
+import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
 
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: MonthlyExamFeeCollection(),
+      home: AllDepartment(),
     );
   }
 }
