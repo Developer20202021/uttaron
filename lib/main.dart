@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:uttaron/AdminDashBoard/AllStudentSetDue.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyExamFeeCollection.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: AllDepartment(),
+      home: AllStudentSetDue(),
     );
   }
 }
