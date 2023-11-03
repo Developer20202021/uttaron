@@ -9,6 +9,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
+import 'package:uttaron/GiveAttendance/ChangeAttendance.dart';
 import 'package:uttaron/Pay/AllPay.dart';
 import 'package:uuid/uuid.dart';
 
@@ -92,6 +93,55 @@ Future<void> getData() async {
      
       AllData = queryDueSnapshot.docs.map((doc) => doc.data()).toList();
       loading = false;
+     });
+       
+     }
+     
+
+    print(AllData);
+}
+
+
+
+
+
+
+
+
+List todayAttendanceData =[];
+
+
+Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) async {
+    // Get docs from collection reference
+      CollectionReference _CustomerOrderHistoryCollectionRef =
+    FirebaseFirestore.instance.collection('Attendance');
+
+  // all Due Query Count
+     Query _CustomerOrderHistoryCollectionRefDueQueryCount = _CustomerOrderHistoryCollectionRef.where("StudentEmail", isEqualTo: StudentEmail).where("Date", isEqualTo: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+
+     QuerySnapshot queryDueSnapshot = await _CustomerOrderHistoryCollectionRefDueQueryCount.get();
+
+    var AllDueData = queryDueSnapshot.docs.map((doc) => doc.data()).toList();
+
+
+
+
+
+     if (AllDueData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+        loading = false;
+      });
+       
+     } else {
+
+      setState(() {
+     
+      todayAttendanceData = queryDueSnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
+
+
+       Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChangeAttendance(StudentEmail: StudentEmail, AttendanceType: todayAttendanceData[0]["type"] , AttendanceID: todayAttendanceData[0]["AttendanceID"])));
      });
        
      }
@@ -327,22 +377,39 @@ Future<void> getData() async {
                                   title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
 
                                   trailing: 
-                             TextButton(onPressed: (){
+                             Column(
+                               children: [
 
 
 
 
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentProfile(StudentEmail: AllData[index]["StudentEmail"])));
+
+
+                    
+
+      AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"? TextButton(onPressed: () async{
+
+
+        getTodayAttendanceData(AllData[index]["StudentEmail"], context);
+
+
+
+
 
       
       
       
       
       
-                                      }, child: Text("Profile", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
-                                       
+         }, child: Text("Change", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                                           
                   backgroundColor: MaterialStatePropertyAll<Color>(ColorName().appColor),
-                ),),
+                ),):Text(""),
+
+
+
+                               ],
+                             ),
                                   
       
       

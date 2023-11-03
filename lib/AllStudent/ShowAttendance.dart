@@ -121,12 +121,112 @@ Future<void> getPresenceData(String StudentEmail) async {
 
 
 
+
+
+
+
+
+
+
+
+List AllAbsenceData =[];
+
+
+
+Future<void> getAbsenceData(String StudentEmail) async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+
+    Query query = _collectionRef.where("StudentEmail", isEqualTo: StudentEmail).where("type", isEqualTo: "absence");
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     AllAbsenceData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+
+
+     if (AllAbsenceData.isEmpty) {
+
+    setState(() {
+      
+      Dataload ="0";
+
+      loading = false;
+     });
+
+
+
+       
+     } else {
+
+
+      for (var i = 0; i < AllAbsenceData.length; i++) {
+
+
+        var AttendanceDate = AllAbsenceData[i]["Date"];
+
+       var AttendanceSplit = AttendanceDate.toString().split("/");
+
+
+       setState(() {
+
+        AbsenceDate.insert(AbsenceDate.length, DateTime(int.parse(AttendanceSplit[2]), int.parse(AttendanceSplit[1]), int.parse(AttendanceSplit[0])));
+         
+       });
+
+
+        
+      }
+
+
+
+    setState(() {
+       AllAbsenceData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      loading = false;
+     });
+
+
+
+
+       
+     }
+
+
+
+
+
+
+
+
+    print(AllAbsenceData);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @override
   void initState() {
     // TODO: implement initState
 
 
     getPresenceData(widget.StudentEmail);
+
+    getAbsenceData(widget.StudentEmail);
+
     super.initState();
   }
 
@@ -169,7 +269,7 @@ Future<void> getPresenceData(String StudentEmail) async {
 
               SfDateRangePicker(
           view: DateRangePickerView.month,
-          monthViewSettings:DateRangePickerMonthViewSettings(blackoutDates:[DateTime(2023, 11, 26), DateTime(2023, 11, 27)],
+          monthViewSettings:DateRangePickerMonthViewSettings(blackoutDates:AbsenceDate,
               
               specialDates:PresenceDate,
               ),
