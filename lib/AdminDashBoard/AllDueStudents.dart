@@ -32,7 +32,9 @@ class AllDueStudents extends StatefulWidget {
 class _AllDueStudentsState extends State<AllDueStudents> {
 
 
+TextEditingController StudentIDNoController = TextEditingController();
 
+var searchField ="";
 
 bool loading = false;
 
@@ -106,6 +108,48 @@ Future<void> getData() async {
 
 // Firebase All Customer Data Load
 
+
+List  AllSearchData = [];
+
+
+Future<void> getSearchData(String StudentIDNo) async {
+
+      setState(() {
+        loading = true;
+        DataLoad ="";
+      });
+    // Get docs from collection reference
+     CollectionReference _SearchCollectionRef =
+    FirebaseFirestore.instance.collection('StudentInfo');
+
+     Query _SearchCollectionRefQuery = _SearchCollectionRef.where("IDNo", isEqualTo: StudentIDNo);
+
+
+    QuerySnapshot SearchCollectionQuerySnapshot = await _SearchCollectionRefQuery.get();
+
+    // Get data from docs and convert map to List
+    setState(() {
+       AllSearchData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+     if (AllSearchData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+        loading = false;
+      });
+       
+     } else {
+
+      setState(() {
+     
+       AllData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
+     });
+       
+     }
+     
+
+    print(AllSearchData);
+}
 
 
 
@@ -274,14 +318,149 @@ Future<void> getData() async {
 
 
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
-        leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("All Due Students",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        appBar:  AppBar(
+
+        toolbarHeight: searchField=="search"?100:56,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        automaticallyImplyLeading: false,
+        title:  searchField=="search"?ListTile(
+
+          leading: IconButton(onPressed: (){
+
+
+            setState(() {
+              loading = true;
+              searchField = "";
+            });
+
+
+
+            getSearchData(StudentIDNoController.text.trim());
+
+
+            print("___________________________________________________________________________________________${StudentIDNoController.text}_____________________");
+
+
+            // comming soon 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.search, color: Theme.of(context).primaryColor,)),
+          title: TextField(
+
+                      keyboardType: TextInputType.phone,
+                      
+                      decoration: InputDecoration(
+                        
+                          border: OutlineInputBorder(),
+                          labelText: 'ID No',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'ID No',
+            
+                           enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                              ),
+                          
+                          
+                          ),
+
+                        controller: StudentIDNoController,
+                  
+                    ),
+            
+            
+
+
+
+        ):Text("All Due Students", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+        actions: [
+
+
+          searchField == "search"?IconButton(onPressed: (){
+
+
+            // showSearch(context: context, delegate: MySearchDelegate());
+
+            
+
+
+                      setState(() {
+                              
+                              searchField = "";
+                              StudentIDNoController.text ="";
+                            });
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.close)):IconButton(onPressed: (){
+
+
+            setState(() {
+              
+              searchField = "search";
+            });
+
+
+          
+
+            
+
+
+
+
+
+
+
+
+          
+
+          }, icon: Icon(Icons.search))
+
+
+
+
+
+
+
+        ],
         
       ),
       body:loading?Center(child: CircularProgressIndicator()): DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(

@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
+import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
+import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
+import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/GiveAttendance/ChangeAttendance.dart';
+import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Pay/AllPay.dart';
 import 'package:uuid/uuid.dart';
 
@@ -40,6 +44,9 @@ class _AllStudentsState extends State<AllStudents> {
 
    var uuid = Uuid();
 
+TextEditingController StudentIDNoController = TextEditingController();
+
+var searchField ="";
 
 bool loading = false;
 
@@ -159,6 +166,57 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
 
 
 
+List  AllSearchData = [];
+
+
+Future<void> getSearchData(String StudentIDNo) async {
+
+      setState(() {
+        loading = true;
+        DataLoad ="";
+      });
+    // Get docs from collection reference
+     CollectionReference _SearchCollectionRef =
+    FirebaseFirestore.instance.collection('StudentInfo');
+
+     Query _SearchCollectionRefQuery = _SearchCollectionRef.where("IDNo", isEqualTo: StudentIDNo);
+
+
+    QuerySnapshot SearchCollectionQuerySnapshot = await _SearchCollectionRefQuery.get();
+
+    // Get data from docs and convert map to List
+    setState(() {
+       AllSearchData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+    });
+     if (AllSearchData.length == 0) {
+      setState(() {
+        DataLoad = "0";
+        loading = false;
+      });
+       
+     } else {
+
+      setState(() {
+     
+       AllData = SearchCollectionQuerySnapshot.docs.map((doc) => doc.data()).toList();
+      loading = false;
+     });
+       
+     }
+     
+
+    print(AllSearchData);
+}
+
+
+
+
+
+
+
+
+
+
 
 // Firebase All Customer Data Load
 
@@ -223,7 +281,7 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
 
     return Scaffold(
 
-      bottomNavigationBar: Padding(
+        bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
         child: Container(
           height: 60,
@@ -240,29 +298,16 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
+
+
+           IconButton(
                 enableFeedback: false,
-                onPressed: () async{
+                onPressed: () {
 
-
-                  // FirebaseAuth.instance
-                  // .authStateChanges()
-                  // .listen((User? user) {
-                  //   if (user == null) {
-                  //     print('User is currently signed out!');
-                  //   } else {
-                  // // Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
-                  // //   }
-                  // });
-
-                  
-                   
-
-
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>AdminDashboard(indexNumber: "1")));
                 },
                 icon: const Icon(
-                  Icons.home_outlined,
+                  Icons.home_sharp,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -270,17 +315,17 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
 
 
 
-              IconButton(
+             IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2")));
 
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
 
 
                 },
                 icon: const Icon(
-                  Icons.electric_bike_outlined,
+                  Icons.notifications,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -294,32 +339,30 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
                 onPressed: () {
 
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3")));
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MonthlyCourseFeeCollection()));
 
 
 
                 },
                 icon: const Icon(
-                  Icons.admin_panel_settings_outlined,
+                  Icons.account_balance,
                   color: Colors.white,
                   size: 25,
                 ),
               ),
 
 
-              widget.indexNumber == "4"?
+
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.person_sharp,
-                  color: Colors.white,
-                  size: 55,
-                  fill: 1.0,
-                ),
-              ): IconButton(
-                enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
@@ -333,15 +376,153 @@ Future<void> getTodayAttendanceData(String StudentEmail, BuildContext context) a
 
 
 
+
+
+
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
-        leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("All Students",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        appBar:  AppBar(
+
+        toolbarHeight: searchField=="search"?100:56,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        automaticallyImplyLeading: false,
+        title:  searchField=="search"?ListTile(
+
+          leading: IconButton(onPressed: (){
+
+
+            setState(() {
+              loading = true;
+              searchField = "";
+            });
+
+
+
+            getSearchData(StudentIDNoController.text.trim());
+
+
+            print("___________________________________________________________________________________________${StudentIDNoController.text}_____________________");
+
+
+            // comming soon 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.search, color: Theme.of(context).primaryColor,)),
+          title: TextField(
+
+                      keyboardType: TextInputType.phone,
+                      
+                      decoration: InputDecoration(
+                        
+                          border: OutlineInputBorder(),
+                          labelText: 'ID No',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'ID No',
+            
+                           enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                              ),
+                          
+                          
+                          ),
+
+                        controller: StudentIDNoController,
+                  
+                    ),
+            
+            
+
+
+
+        ):Text("All Students", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
+        actions: [
+
+
+          searchField == "search"?IconButton(onPressed: (){
+
+
+            // showSearch(context: context, delegate: MySearchDelegate());
+
+            
+
+
+                      setState(() {
+                              
+                              searchField = "";
+                              StudentIDNoController.text ="";
+                            });
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+          }, icon: Icon(Icons.close)):IconButton(onPressed: (){
+
+
+            setState(() {
+              
+              searchField = "search";
+            });
+
+
+          
+
+            
+
+
+
+
+
+
+
+
+          
+
+          }, icon: Icon(Icons.search))
+
+
+
+
+
+
+
+        ],
         
       ),
       body:loading?Center(child: CircularProgressIndicator()): DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(

@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
+import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
+import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
+import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
@@ -167,7 +170,7 @@ Future<void> getData() async {
 
     return Scaffold(
 
-      bottomNavigationBar: Padding(
+   bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
         child: Container(
           height: 60,
@@ -184,47 +187,16 @@ Future<void> getData() async {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                enableFeedback: false,
-                onPressed: () async{
 
 
-                  // FirebaseAuth.instance
-                  // .authStateChanges()
-                  // .listen((User? user) {
-                  //   if (user == null) {
-                  //     print('User is currently signed out!');
-                  //   } else {
-                  // // Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
-                  // //   }
-                  // });
-
-                  
-                   
-
-
-
-                },
-                icon: const Icon(
-                  Icons.home_outlined,
-                  color: Colors.white,
-                  size: 25,
-                ),
-              ),
-
-
-
-              IconButton(
+           IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2")));
-
-
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>AdminDashboard(indexNumber: "1")));
                 },
                 icon: const Icon(
-                  Icons.electric_bike_outlined,
+                  Icons.home_sharp,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -233,37 +205,68 @@ Future<void> getData() async {
 
 
 
-              IconButton(
+              widget.indexNumber=="2"? IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3")));
-
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
 
 
                 },
                 icon: const Icon(
-                  Icons.admin_panel_settings_outlined,
-                  color: Colors.white,
-                  size: 25,
-                ),
-              ),
-
-
-              widget.indexNumber == "4"?
-              IconButton(
-                enableFeedback: false,
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.person_sharp,
+                  Icons.notifications,
                   color: Colors.white,
                   size: 55,
-                  fill: 1.0,
                 ),
               ): IconButton(
                 enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+
+                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
+
+
+                },
+                icon: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MonthlyCourseFeeCollection()));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.account_balance,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
@@ -281,7 +284,7 @@ Future<void> getData() async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("All Notice",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("All Notice",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

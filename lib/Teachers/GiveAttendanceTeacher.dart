@@ -7,9 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
+import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
+import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
+import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/GiveAttendance/ChangeAttendance.dart';
+import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Pay/AllPay.dart';
 import 'package:uttaron/Teachers/ChangeAttendance.dart';
 import 'package:uuid/uuid.dart';
@@ -242,29 +246,16 @@ Future<void> getTodayAttendanceData(String TeacherEmail, BuildContext context) a
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
+
+
+           IconButton(
                 enableFeedback: false,
-                onPressed: () async{
+                onPressed: () {
 
-
-                  // FirebaseAuth.instance
-                  // .authStateChanges()
-                  // .listen((User? user) {
-                  //   if (user == null) {
-                  //     print('User is currently signed out!');
-                  //   } else {
-                  // // Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
-                  // //   }
-                  // });
-
-                  
-                   
-
-
-
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>AdminDashboard(indexNumber: "1")));
                 },
                 icon: const Icon(
-                  Icons.home_outlined,
+                  Icons.home_sharp,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -272,17 +263,17 @@ Future<void> getTodayAttendanceData(String TeacherEmail, BuildContext context) a
 
 
 
-              IconButton(
+             IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2")));
 
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
 
 
                 },
                 icon: const Icon(
-                  Icons.electric_bike_outlined,
+                  Icons.notifications,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -296,32 +287,30 @@ Future<void> getTodayAttendanceData(String TeacherEmail, BuildContext context) a
                 onPressed: () {
 
 
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3")));
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MonthlyCourseFeeCollection()));
 
 
 
                 },
                 icon: const Icon(
-                  Icons.admin_panel_settings_outlined,
+                  Icons.account_balance,
                   color: Colors.white,
                   size: 25,
                 ),
               ),
 
 
-              widget.indexNumber == "4"?
+
               IconButton(
                 enableFeedback: false,
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.person_sharp,
-                  color: Colors.white,
-                  size: 55,
-                  fill: 1.0,
-                ),
-              ): IconButton(
-                enableFeedback: false,
-                onPressed: () {},
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
+
+
+
+
+                },
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
@@ -331,6 +320,7 @@ Future<void> getTodayAttendanceData(String TeacherEmail, BuildContext context) a
             ],
           ),),
       ),
+
 
 
 

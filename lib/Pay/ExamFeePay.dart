@@ -9,7 +9,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
+import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
+import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -207,11 +210,106 @@ class _ExamFeePayState extends State<ExamFeePay> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+
+       bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(left: 5, right: 5, bottom: 9),
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+      
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+
+
+           IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) =>AdminDashboard(indexNumber: "1")));
+                },
+                icon: const Icon(
+                  Icons.home_sharp,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+             IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
+
+
+                },
+                icon: const Icon(
+                  Icons.notifications,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MonthlyCourseFeeCollection()));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.account_balance,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
+
+
+
+
+                },
+                icon: const Icon(
+                  Icons.person_outline,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+            ],
+          ),),
+      ),
+
+
+
       
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Exam Fee",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Exam Fee",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

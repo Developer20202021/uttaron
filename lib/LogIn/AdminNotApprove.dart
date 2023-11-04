@@ -16,7 +16,7 @@ class _AdminNotApproveState extends State<AdminNotApprove> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.purple),
         automaticallyImplyLeading: false,
-        title: const Text("Not Approve",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Not Approve",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

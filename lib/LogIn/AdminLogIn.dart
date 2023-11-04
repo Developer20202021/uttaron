@@ -8,9 +8,11 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
 import 'package:uttaron/LogIn/AdminNotApprove.dart';
 import 'package:uttaron/LogIn/EmailNotVerified.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
+import 'package:uttaron/Settings/ResetPassword.dart';
 
 
 
@@ -26,7 +28,7 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
   TextEditingController myEmailController = TextEditingController();
   TextEditingController myPassController = TextEditingController();
 
-
+bool _passVisibility = true;
 
    var createUserErrorCode = "";
 
@@ -63,7 +65,7 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
-        title: const Text("Admin Log In",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Admin Log In",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -245,7 +247,22 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
                           
                 TextField(
                    autofillHints: [AutofillHints.password],
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: _passVisibility,
+                  obscuringCharacter:"*",
                   decoration: InputDecoration(
+
+                  suffixIcon: IconButton(
+                      icon: _passVisibility
+                          ? Icon(Icons.visibility_off)
+                          : Icon(Icons.visibility),
+                      onPressed: () {
+                        _passVisibility = !_passVisibility;
+
+                        setState(() {});
+                      },
+                    ),
+                    
                       border: OutlineInputBorder(),
                       labelText: 'Enter Password',
                        labelStyle: TextStyle(
@@ -262,6 +279,8 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
                           borderSide: BorderSide(
                               width: 3, color: Color.fromARGB(255, 66, 125, 145)),
                         ),
+
+                        
                       
                       
                       ),
@@ -343,7 +362,7 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
                       
               
               
-                            //  Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboard(indexNumber: "1",)),);
+                             Navigator.push(context, MaterialPageRoute(builder: (context) => AdminDashboard(indexNumber: "1",)),);
               
                              setState(() {
                             loading=false;
@@ -473,9 +492,9 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
               
               
               
-                }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                }, child: Text("Registration", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                      
-                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.pink.shade300),
                       ),),),
               
               
@@ -483,7 +502,51 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
               
               
                   ],
+                ),
+
+
+
+
+                SizedBox(
+                  height: 50,
+                ),
+
+
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+
+
+                        Container(width: 150, child:TextButton(onPressed: (){
+              
+                       Navigator.push(
+                    context,
+              
+                           MaterialPageRoute(builder: (context) => const ResetPassword()),
+                  );
+              
+              
+              
+              
+                }, child: Text("Reset Password", style: TextStyle(color: Colors.white, fontSize: 13),), style: ButtonStyle(
+                     
+                        backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
+                      ),),),
+              
+              
+              
+
+
+
+                  ],
                 )
+
+
+
+
+
+
                           
                           
                           

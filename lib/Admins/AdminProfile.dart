@@ -3,8 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
+import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/CourseFeeHistory.dart';
 import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
+import 'package:uttaron/Notice/AllNotice.dart';
 
  
 
@@ -170,70 +173,64 @@ Future<void> getData(String AdminEmail) async {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
+
+
+         IconButton(
                 enableFeedback: false,
-                onPressed: () async{
-
-
-
-                   FirebaseAuth.instance
-                  .authStateChanges()
-                  .listen((User? user) {
-                    if (user == null) {
-                      print('User is currently signed out!');
-                    } else {
-                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => HomeScreen(userName: user.displayName, userEmail: user.email, indexNumber: "1",)));
-                    }
-                  });
-
-
-
-
-
-                },
+                onPressed: () {},
                 icon: const Icon(
-                  Icons.home_outlined,
+                  Icons.home_sharp,
                   color: Colors.white,
-                  size: 35,
+                  size: 25,
                 ),
               ),
-              IconButton(
-                enableFeedback: false,
-                onPressed: () {
-
-    //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen(indexNumber: "2",)));
 
 
-                },
-                icon: const Icon(
-                  Icons.electric_bike_outlined,
-                  color: Colors.white,
-                  size: 35,
-                ),
-              ),
+
+
               IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
 
-                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmin(indexNumber: "3",)));
-
-
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")));
 
 
                 },
                 icon: const Icon(
-                  Icons.admin_panel_settings_outlined,
+                  Icons.notifications,
                   color: Colors.white,
-                  size: 35,
+                  size: 25,
                 ),
               ),
+
+
+
+
               IconButton(
                 enableFeedback: false,
                 onPressed: () {
 
 
-                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllCustomer(indexNumber: "4")));
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) =>MonthlyCourseFeeCollection()));
+
+
+
+                },
+                icon: const Icon(
+                  Icons.account_balance,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              ),
+
+
+
+              IconButton(
+                enableFeedback: false,
+                onPressed: () {
+
+                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
 
 
 
@@ -242,7 +239,7 @@ Future<void> getData(String AdminEmail) async {
                 icon: const Icon(
                   Icons.person_outline,
                   color: Colors.white,
-                  size: 35,
+                  size: 25,
                 ),
               ),
             ],
@@ -254,7 +251,7 @@ Future<void> getData(String AdminEmail) async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Admin Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Admin Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

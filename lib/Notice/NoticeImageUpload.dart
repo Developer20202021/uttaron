@@ -355,7 +355,7 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
 
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
-        title:  Text("Upload Image", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Upload Image", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -393,7 +393,7 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
             
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text("নিচে আপনার নিজের Image Upload করুন", style: TextStyle(color: Colors.black),),
+              child: Text("আপনি একাধিক Image Upload করতে পারবেন। Upload করার সময় Progress Indicator চলমান থাকলে নতুন কিছু Upload করবেন না।", style: TextStyle(color: Colors.black),),
             )),
 
 

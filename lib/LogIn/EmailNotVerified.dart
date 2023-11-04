@@ -18,7 +18,7 @@ class _EmailNotVerifiedState extends State<EmailNotVerified> {
       appBar: AppBar(
         iconTheme: IconThemeData(color: ColorName().appColor),
         automaticallyImplyLeading: false,
-        title: const Text("Email Not Verified",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Email Not Verified",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

@@ -11,6 +11,8 @@ import 'package:uttaron/AdminDashBoard/AllStudentSetDue.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyExamFeeCollection.dart';
 import 'package:uttaron/AdminDashBoard/SendSMSToAllStudents.dart';
+import 'package:uttaron/Admins/AdminProfile.dart';
+import 'package:uttaron/Admins/AllAdmins.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperInfo.dart';
 import 'package:uttaron/GiveAttendance/AllDepartment.dart';
@@ -307,7 +309,7 @@ var AdminEmail = "";
 
                 },
                 icon: const Icon(
-                  Icons.table_restaurant,
+                  Icons.notifications,
                   color: Colors.white,
                   size: 25,
                 ),
@@ -399,7 +401,7 @@ var AdminEmail = "";
                 onTap: (){
 
 
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AdminProfile(AdminEmail: AdminEmail)));
 
 
 
@@ -447,7 +449,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.food_bank),
+                    Icon(Icons.fingerprint),
                     SizedBox(width: 5,),
                     Text("Student Attendance"),
                     SizedBox(width: 5,),
@@ -501,7 +503,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.person_3_rounded),
+                    Icon(Icons.payment),
                     SizedBox(width: 5,),
                     Text("Due Students"),
                     SizedBox(width: 5,),
@@ -620,7 +622,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.table_view),
+                    Icon(Icons.account_balance),
                     SizedBox(width: 5,),
                     Text("Monthly Course Fee"),
                     SizedBox(width: 5,),
@@ -631,6 +633,34 @@ var AdminEmail = "";
                 padding: EdgeInsets.all(18.0),
               ),
 
+
+
+
+
+
+
+              PopupMenuItem(
+                onTap: (){
+
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllAdmins(indexNumber: "")));
+
+
+
+
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.admin_panel_settings),
+                    SizedBox(width: 5,),
+                    Text("All Admins"),
+                    SizedBox(width: 5,),
+                    Icon(Icons.arrow_right_alt),
+                  ],
+                ),
+                
+                padding: EdgeInsets.all(18.0),
+              ),
 
 
 
@@ -653,7 +683,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.sell),
+                    Icon(Icons.account_balance),
                     SizedBox(width: 5,),
                     Text("Exam Fee History"),
                     SizedBox(width: 5,),
@@ -678,7 +708,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.sell_sharp),
+                    Icon(Icons.notification_add),
                     SizedBox(width: 5,),
                     Text("Notice Upload"),
                     SizedBox(width: 5,),
@@ -703,7 +733,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.account_balance_rounded),
+                    Icon(Icons.notifications),
                     SizedBox(width: 5,),
                     Text("All Notice"),
                     SizedBox(width: 5,),
@@ -771,7 +801,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.person),
+                    Icon(Icons.fingerprint),
                     SizedBox(width: 5,),
                     Text("teacher Attendance"),
                     SizedBox(width: 5,),
@@ -797,7 +827,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.person),
+                    Icon(Icons.password),
                     SizedBox(width: 5,),
                     Text("Change Password"),
                     SizedBox(width: 5,),
@@ -824,7 +854,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.receipt),
+                    Icon(Icons.sms),
                     SizedBox(width: 5,),
                     Text("SMS Info"),
                     SizedBox(width: 5,),
@@ -864,7 +894,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.admin_panel_settings),
+                    Icon(Icons.sms),
                     SizedBox(width: 5,),
                     Text("Student Msg Send"),
                     SizedBox(width: 5,),
@@ -890,7 +920,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.new_label),
+                    Icon(Icons.add),
                     SizedBox(width: 5,),
                     Text("Set All Due"),
                     SizedBox(width: 5,),
@@ -916,7 +946,7 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.delivery_dining_outlined),
+                    Icon(Icons.developer_board),
                     SizedBox(width: 5,),
                     Text("Developer Info"),
                     SizedBox(width: 5,),
@@ -941,33 +971,6 @@ var AdminEmail = "";
 
 
 
-              
-              
-
-
-
-PopupMenuItem(
-                onTap: (){
-
-
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context) => DeveloperInfo()));
-
-
-
-
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.developer_board),
-                    SizedBox(width: 5,),
-                    Text("Developer"),
-                    SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
-                  ],
-                ),
-                
-                padding: EdgeInsets.all(18.0),
-              ),
               
 
 
@@ -1185,7 +1188,7 @@ PopupMenuItem(
                       padding: const EdgeInsets.only(top: 50),
                       child: Column(
                         children: [
-                          Text("Total Paid Student: ${AllPaidStudentData.toString()}", style: TextStyle(
+                          Text("Total Paid Student: ${AllPaidStudentData.length.toString()}", style: TextStyle(
                     // ${moneyAdd.toString()}
                             fontSize: 20,
                             color:Colors.white,

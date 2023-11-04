@@ -57,7 +57,7 @@ class _AllPayState extends State<AllPay> {
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("All Pay",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("All Pay",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,

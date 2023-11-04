@@ -690,7 +690,7 @@ Future NIDBackImageCamera(BuildContext context) async {
 
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
-        title:  Text("Upload Image", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title:  Text("Upload Image", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
