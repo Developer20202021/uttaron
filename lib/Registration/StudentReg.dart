@@ -1055,7 +1055,8 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                         "AdmissionYear":"${DateTime.now().year}",
                         "StudentStatus":"new",
                         "Category":SelectedCategory,
-                        "LastAttendance":""
+                        "LastAttendance":"",
+                        "AccountStatus":"open"
 
                      
                       };

@@ -1,3 +1,4 @@
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -10,10 +11,12 @@ import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Pay/AllPay.dart';
+import 'package:uttaron/Teachers/ShowAttendance.dart';
+import 'package:uttaron/Teachers/TeacherProfile.dart';
 
 
 
-class AllDueStudents extends StatefulWidget {
+class AllTeachers extends StatefulWidget {
 
   final indexNumber ;
 
@@ -22,13 +25,13 @@ class AllDueStudents extends StatefulWidget {
 
 
 
-  const AllDueStudents({super.key, required this.indexNumber});
+  const AllTeachers({super.key, required this.indexNumber,});
 
   @override
-  State<AllDueStudents> createState() => _AllDueStudentsState();
+  State<AllTeachers> createState() => _AllTeachersState();
 }
 
-class _AllDueStudentsState extends State<AllDueStudents> {
+class _AllTeachersState extends State<AllTeachers> {
 
 
 
@@ -60,20 +63,20 @@ List  AllData = [];
 Future<void> getData() async {
     // Get docs from collection reference
       CollectionReference _CustomerOrderHistoryCollectionRef =
-    FirebaseFirestore.instance.collection('StudentInfo');
+    FirebaseFirestore.instance.collection('TeacherInfo');
 
-  // all Due Query Count
-     Query _CustomerOrderHistoryCollectionRefDueQueryCount = _CustomerOrderHistoryCollectionRef.where("StudentType", isEqualTo: "Due").where("StudentStatus", isEqualTo: "new").where("AccountStatus", isEqualTo: "open");
+  // // all Due Query Count
+  //    Query _CustomerOrderHistoryCollectionRefDueQueryCount = _CustomerOrderHistoryCollectionRef.where("Department", isEqualTo: widget.DepartmentName).where("Semister", isEqualTo: widget.SemisterName).where("StudentStatus", isEqualTo: "new");
 
-     QuerySnapshot queryDueSnapshot = await _CustomerOrderHistoryCollectionRefDueQueryCount.get();
+     QuerySnapshot queryDueSnapshot = await _CustomerOrderHistoryCollectionRef.get();
 
-      AllData = queryDueSnapshot.docs.map((doc) => doc.data()).toList();
-
-
+    var AllDueData = queryDueSnapshot.docs.map((doc) => doc.data()).toList();
 
 
 
-     if (AllData.length == 0) {
+
+
+     if (AllDueData.length == 0) {
       setState(() {
         DataLoad = "0";
         loading = false;
@@ -129,12 +132,13 @@ Future<void> getData() async {
   Future refresh() async{
 
 
-
+    setState(() {
 
 
       
   getData();
 
+    });
 
 
 
@@ -276,7 +280,7 @@ Future<void> getData() async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("All Due Students",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("All Teachers",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -313,7 +317,7 @@ Future<void> getData() async {
                           
                    
                             
-                                  title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                                  title: Text("S No:- ${index+1}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
 
                                   trailing: 
                              TextButton(onPressed: (){
@@ -321,7 +325,7 @@ Future<void> getData() async {
 
 
 
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowAttendance(StudentEmail: AllData[index]["StudentEmail"])));
+                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowTeacherAttendance(TeacherEmail: AllData[index]["TeacherEmail"])));
 
       
       
@@ -340,27 +344,16 @@ Future<void> getData() async {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                      
-                                      Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
-                                      Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
+                                      Text("Name:${AllData[index]["TeacherName"].toString().toUpperCase()}"),
+                                      Text("Phone Number:${AllData[index]["TeacherPhoneNumber"]}"),
 
-                                      Text("Student Email: ${AllData[index]["StudentEmail"]}"),
-
-                                      Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
-                  
-                                      Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
-
-                                      Text("Type: ${AllData[index]["StudentType"]}"),
-
-                                      
+                                      Text("Email: ${AllData[index]["TeacherEmail"]}"),
+                                      Text("Address: ${AllData[index]["TeacherAddress"]}"),
 
                                       Text("Department: ${AllData[index]["Department"]}"),
-                                      
-                                      Text("Semister: ${AllData[index]["Semister"]}"),
-                                     
-                                     Text("Category: ${AllData[index]["Category"]}"),
 
+                                     Text("Subject: ${AllData[index]["SubjectName"]}"),
 
-                                      Text("Due: ${AllData[index]["DueAmount"]}৳"),
 
                                     ],
                                   ),
@@ -383,7 +376,7 @@ Future<void> getData() async {
       
       
                                        
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllPay(StudentDueAmount: AllData[index]["DueAmount"], StudentEmail: AllData[index]["StudentEmail"], StudentName: AllData[index]["StudentName"], StudentPhoneNumber: AllData[index]["StudentPhoneNumber"], FatherPhoneNo: AllData[index]["FatherPhoneNo"])));
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllPay(StudentDueAmount: AllData[index]["DueAmount"], StudentEmail: AllData[index]["StudentEmail"], StudentName: AllData[index]["StudentName"], StudentPhoneNumber: AllData[index]["StudentPhoneNumber"], FatherPhoneNo: AllData[index]["FatherPhoneNo"])));
       
       
       
@@ -405,7 +398,7 @@ Future<void> getData() async {
 
 
 
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentProfile(StudentEmail: AllData[index]["StudentEmail"])));
+                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => TeacherProfile(TeacherEmail:  AllData[index]["TeacherEmail"])));
 
       
       
@@ -445,7 +438,7 @@ Future<void> getData() async {
             dialogType: DialogType.question,
             animType: AnimType.rightSlide,
             title: 'Are You Sure?',
-            desc: 'আপনি কি এই Student কে পুরাতন Student এর তালিকায় দিতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
+            desc: 'আপনি কি এই Teacher কে পুরাতন Teacher এর তালিকায় দিতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
           
             btnOkOnPress: () async{
 
@@ -454,13 +447,13 @@ Future<void> getData() async {
 
                var updateData ={
 
-                                "StudentStatus":"old"
+                                "TeacherStatus":"old"
 
                               };
 
 
    final StudentInfo =
-    FirebaseFirestore.instance.collection('StudentInfo').doc(AllData[index]["StudentEmail"]);
+    FirebaseFirestore.instance.collection('TeacherInfo').doc(AllData[index]["TeacherEmail"]);
 
                               
                           StudentInfo.update(updateData).then((value) => setState((){
@@ -586,7 +579,7 @@ Future<void> getData() async {
             dialogType: DialogType.question,
             animType: AnimType.rightSlide,
             title: 'Are You Sure?',
-            desc: 'আপনি কি এই Student কে Approve করতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
+            desc: 'আপনি কি এই Teacher কে Approve করতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
           
             btnOkOnPress: () async{
 
@@ -601,7 +594,7 @@ Future<void> getData() async {
 
 
    final StudentInfo =
-    FirebaseFirestore.instance.collection('StudentInfo').doc(AllData[index]["StudentEmail"]);
+    FirebaseFirestore.instance.collection('TeacherInfo').doc(AllData[index]["TeacherEmail"]);
 
                               
                           StudentInfo.update(updateData).then((value) => setState((){
@@ -725,7 +718,7 @@ Future<void> getData() async {
             dialogType: DialogType.question,
             animType: AnimType.rightSlide,
             title: 'Are You Sure?',
-            desc: 'আপনি কি এই Student কে  Disable করতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
+            desc: 'আপনি কি এই Teacher কে  Disable করতে চান?যদি হ্যা হয় তবে Ok button press করুন। না হলে Cancel button press করুন।',
           
             btnOkOnPress: () async{
 
@@ -740,7 +733,7 @@ Future<void> getData() async {
 
 
    final StudentInfo =
-    FirebaseFirestore.instance.collection('StudentInfo').doc(AllData[index]["StudentEmail"]);
+    FirebaseFirestore.instance.collection('TeacherInfo').doc(AllData[index]["TeacherEmail"]);
 
                               
                           StudentInfo.update(updateData).then((value) => setState((){
@@ -1001,10 +994,3 @@ Future<void> getData() async {
     );
   }
 }
-
-
-
-
-
-
-

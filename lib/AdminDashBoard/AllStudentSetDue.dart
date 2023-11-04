@@ -55,7 +55,7 @@ Future<void> getPresenceData() async {
   CollectionReference _collectionRef =
     FirebaseFirestore.instance.collection('StudentInfo');
 
-    Query query = _collectionRef.where("StudentStatus", isEqualTo: "new");
+    Query query = _collectionRef.where("StudentStatus", isEqualTo: "new").where("AccountStatus", isEqualTo: "open");
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -73,7 +73,7 @@ Future<void> getPresenceData() async {
      });
 
 
-
+Navigator.of(context).pop();
        
      } else {
 
@@ -289,7 +289,7 @@ Future<void> getPresenceData() async {
         bottomOpacity: 0.0,
         elevation: 0.0,
       ),
-      body:loading?Center(child: CircularProgressIndicator(),): SingleChildScrollView(
+      body:loading?Center(child: CircularProgressIndicator(),):Dataload=="0"?Center(child: Text("No Data Available"),): SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

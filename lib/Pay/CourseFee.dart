@@ -108,8 +108,9 @@ class _CourseFeeState extends State<CourseFee> {
 
                   final UpadateData ={
 
-                    "DueAmount":(DuePayment-int.parse(PaymentController.text.trim())).toString(),
-                    "StudentType":"Paid"
+                    "DueAmount":(DuePayment-int.parse(PaymentController.text.trim()))<0?"0":(DuePayment-int.parse(PaymentController.text.trim())).toString(),
+                    "StudentType":"Paid",
+                    "AccountStatus":(DuePayment-int.parse(PaymentController.text.trim()))<=0?"close":"open"
 
                 
                 };

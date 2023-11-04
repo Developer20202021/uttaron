@@ -10,6 +10,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
 
 class TeacherRegistration extends StatefulWidget {
@@ -25,6 +26,11 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
   TextEditingController myAddressController = TextEditingController();
   TextEditingController myPhoneNumberController = TextEditingController();
   TextEditingController myAdminNameController = TextEditingController();
+  TextEditingController SubjectController = TextEditingController();
+
+
+
+  String SelectedValue = ""; 
 
  var createUserErrorCode = "";
 
@@ -349,6 +355,82 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
                     ),
 
 
+                    
+                    TextField(
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Subject',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'Enter Subject',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: SubjectController,
+                    ),
+            
+
+            SizedBox(
+                      height: 15,
+                    ),
+
+
+
+
+                  
+                      Container(
+                        height: 70,
+                        child: DropdownButton(
+                         
+                                           
+                         
+                          hint:  SelectedValue == ""
+                              ? Text('Department')
+                              : Text(
+                                 SelectedValue,
+                                  style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
+                                ),
+                          isExpanded: true,
+                          iconSize: 30.0,
+                          style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
+                          items: ['EEE', 'CSE', 'Civil', "ME"].map(
+                            (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                              () {
+                                 SelectedValue = val!;
+                              },
+                            );
+                          },
+                        ),
+                      ),
+
+
+
+
+
+                              SizedBox(height: 11,),
+
+
+
 
 
            
@@ -469,7 +551,11 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
                         "registrationType":"teacher",
                         "TeacherPhoneNumber":myPhoneNumberController.text.trim(),
                         "TeacherPassword":myPassController.text.trim(),
-                        "TeacherAddress":myAddressController.text.trim()
+                        "TeacherAddress":myAddressController.text.trim(),
+                        "SubjectName":SubjectController.text.trim(),
+                        "Department":SelectedValue,
+                        "TeacherStatus":"new",
+                        "LastAttendance":""
 
                      
                       };
