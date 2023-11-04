@@ -49,7 +49,9 @@ var Dataload = "";
 Future<void> getPresenceData(String StudentEmail) async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
-
+          setState(() {
+                loading= true;
+              });
 
     Query query = _collectionRef.where("StudentEmail", isEqualTo: StudentEmail).where("type", isEqualTo: "presence");
     QuerySnapshot querySnapshot = await query.get();
@@ -136,6 +138,10 @@ List AllAbsenceData =[];
 Future<void> getAbsenceData(String StudentEmail) async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
+
+    setState(() {
+      loading= true;
+    });
 
 
     Query query = _collectionRef.where("StudentEmail", isEqualTo: StudentEmail).where("type", isEqualTo: "absence");
@@ -259,7 +265,7 @@ Future<void> getAbsenceData(String StudentEmail) async {
         bottomOpacity: 0.0,
         elevation: 0.0,
       ),
-      body:SingleChildScrollView(
+      body:loading?Center(child: CircularProgressIndicator(),): SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

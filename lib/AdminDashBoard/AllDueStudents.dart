@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
+import 'package:uttaron/AdminDashBoard/SendSmSToDueStudent.dart';
 import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
@@ -309,65 +310,80 @@ Future<void> getData() async {
 
 
 
-                        ListTile(
-                          
-                   
-                            
-                                  title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                        InkWell(
 
-                                  trailing: 
-                             TextButton(onPressed: (){
-
-
-
+                          onDoubleTap: () {
 
                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowAttendance(StudentEmail: AllData[index]["StudentEmail"])));
+                            
+                          },
+                        
 
-      
-      
-      
-      
-      
-                                      }, child: Text("Show A/p", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                         onTap: () {
+                             Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentProfile(StudentEmail: AllData[index]["StudentEmail"])));
+
+                         },
+
+                          child: ListTile(
+                            
+                                           
+                              
+                                    title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                        
+                                    trailing: 
+                               TextButton(onPressed: (){
+                        
+                        
+                        
+                        
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => SendSmSToDueStudent(DueAmount: AllData[index]["DueAmount"], StudentName: AllData[index]["StudentName"], StudentPhoneNumber: AllData[index]["StudentPhoneNumber"])));
+                        
+                              
+                              
+                              
+                              
+                              
+                                        }, child: Text("Send SMS", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                                         
+                                          backgroundColor: MaterialStatePropertyAll<Color>(ColorName().appColor),
+                                        ),),
+                                    
+                              
+                              
+                                    subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
                                        
-                  backgroundColor: MaterialStatePropertyAll<Color>(ColorName().appColor),
-                ),),
-                                  
-      
-      
-                                  subtitle: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                     
-                                      Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
-                                      Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
-
-                                      Text("Student Email: ${AllData[index]["StudentEmail"]}"),
-
-                                      Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
-                  
-                                      Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
-
-                                      Text("Type: ${AllData[index]["StudentType"]}"),
-
-                                      
-
-                                      Text("Department: ${AllData[index]["Department"]}"),
-                                      
-                                      Text("Semister: ${AllData[index]["Semister"]}"),
-                                     
-                                     Text("Category: ${AllData[index]["Category"]}"),
-
-
-                                      Text("Due: ${AllData[index]["DueAmount"]}৳"),
-
-                                    ],
+                                        Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
+                                        Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
+                        
+                                        Text("Student Email: ${AllData[index]["StudentEmail"]}"),
+                        
+                                        Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
+                                          
+                                        Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
+                        
+                                        Text("Type: ${AllData[index]["StudentType"]}"),
+                        
+                                        
+                        
+                                        Text("Department: ${AllData[index]["Department"]}"),
+                                        
+                                        Text("Semister: ${AllData[index]["Semister"]}"),
+                                       
+                                       Text("Category: ${AllData[index]["Category"]}"),
+                        
+                        
+                                        Text("Due: ${AllData[index]["DueAmount"]}৳"),
+                        
+                                      ],
+                                    ),
+                              
+                              
+                              
                                   ),
-                            
-                            
-                            
-                                ),
+                        ),
 
 
 

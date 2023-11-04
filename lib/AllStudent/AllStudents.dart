@@ -35,6 +35,8 @@ class _AllStudentsState extends State<AllStudents> {
 
 
 
+
+
 bool loading = false;
 
 var DataLoad = "";
@@ -312,65 +314,436 @@ Future<void> getData() async {
 
 
 
-                        ListTile(
-                          
-                   
-                            
-                                  title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-
-                                  trailing: 
-                             TextButton(onPressed: (){
+                        InkWell(
 
 
+                    onTap: () {
+
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentProfile(StudentEmail: AllData[index]["StudentEmail"])));
+                      
+                    },
 
 
-                               Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowAttendance(StudentEmail: AllData[index]["StudentEmail"])));
-
-      
-      
-      
-      
-      
-                                      }, child: Text("Show A/p", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
-                                       
-                  backgroundColor: MaterialStatePropertyAll<Color>(ColorName().appColor),
-                ),),
-                                  
-      
-      
-                                  subtitle: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                     
-                                      Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
-                                      Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
-
-                                      Text("Student Email: ${AllData[index]["StudentEmail"]}"),
-
-                                      Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
-                  
-                                      Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
-
-                                      Text("Type: ${AllData[index]["StudentType"]}"),
-
-                                      
-
-                                      Text("Department: ${AllData[index]["Department"]}"),
-                                      
-                                      Text("Semister: ${AllData[index]["Semister"]}"),
-                                     
-                                     Text("Category: ${AllData[index]["Category"]}"),
 
 
-                                      Text("Due: ${AllData[index]["DueAmount"]}৳"),
+                    onDoubleTap: () async{
 
-                                    ],
-                                  ),
-                            
-                            
-                            
+
+                      
+          showDialog(
+  context: context,
+   builder: (context) {
+   String SelectedSemisterValue ="";
+
+    return StatefulBuilder(
+     builder: (context, setState) {
+      return AlertDialog(
+      title: Text("Are You Sure? You Want to Change The Semister."),
+      content:   Container(
+                        height: 70,
+                        child: DropdownButton(
+                         
+                                           
+                         
+                          hint: SelectedSemisterValue == ""
+                              ? Text('Semister')
+                              : Text(
+                                 SelectedSemisterValue,
+                                  style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
                                 ),
+                          isExpanded: true,
+                          iconSize: 30.0,
+                          style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
+                          items: ['Sem-1', 'Sem2', 'Sem-3', "Sem-4","Sem-5", "Sem-6","Sem-7","Sem-8"].map(
+                            (val) {
+                              return DropdownMenuItem<String>(
+                                value: val,
+                                child: Text(val),
+                              );
+                            },
+                          ).toList(),
+                          onChanged: (val) {
+                            setState(
+                              () {
+                                 SelectedSemisterValue = val!;
+                              },
+                            );
+                          },
+                        ),
+                      ),
+
+
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () async{
+            var updateData ={
+
+                                "Semister":SelectedSemisterValue.toString().toLowerCase()
+
+                              };
+
+
+   final StudentInfo =
+    FirebaseFirestore.instance.collection('StudentInfo').doc(AllData[index]["StudentEmail"]);
+
+                              
+                          StudentInfo.update(updateData).then((value) => setState((){
+
+                      
+                      getData();
+
+
+                      Navigator.pop(context);
+
+
+
+
+
+                              final snackBar = SnackBar(
+                 
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Successfull',
+                      message:
+                          'Hey Thank You. Good Job',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+              
+
+
+              
+          
+
+
+
+                         setState(() {
+                            loading = false;
+                          });
+
+
+
+
+
+                          })).onError((error, stackTrace) => setState((){
+
+
+
+
+                              final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Something Wrong!!!!',
+                      message:
+                          'Try again later...',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+
+                   setState(() {
+                            loading = false;
+                          });
+
+
+                          }));
+      
+          },
+          child: Text("Change"),
+         ),
+        ],
+      );
+    },
+   );
+  },
+);
+
+
+
+
+
+
+
+
+
+
+                      
+
+
+
+
+                    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+                          onLongPress: () async{
+
+
+          
+
+          showDialog(
+  context: context,
+   builder: (context) {
+  String SelectedCategory ="";
+
+
+    return StatefulBuilder(
+     builder: (context, setState) {
+      return AlertDialog(
+      title: Text("Are You Sure? You Want to Change The Category."),
+      content:  Container(
+                            height: 70,
+                            child: DropdownButton(
+                             
+                                               
+                             
+                              hint:  SelectedCategory == ""
+                                  ? Text('Category')
+                                  : Text(
+                                     SelectedCategory,
+                                      style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
+                                    ),
+                              isExpanded: true,
+                              iconSize: 30.0,
+                              style: TextStyle(color: ColorName().appColor, fontWeight: FontWeight.bold, fontSize: 16),
+                              items: ["0",'1', '2', '3', "4","5","6","7","8"].map(
+                                (val) {
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(val),
+                                  );
+                                },
+                              ).toList(),
+                              onChanged: (val) {
+                                setState(
+                                  () {
+                                     SelectedCategory = val!;
+
+                                     print(val);
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+
+
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context),
+          child: Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () async{
+            var updateData ={
+
+                                "Category":SelectedCategory.toString().toLowerCase()
+
+                              };
+
+
+   final StudentInfo =
+    FirebaseFirestore.instance.collection('StudentInfo').doc(AllData[index]["StudentEmail"]);
+
+                              
+                          StudentInfo.update(updateData).then((value) => setState((){
+
+                      
+                      getData();
+
+
+                      Navigator.pop(context);
+
+
+
+
+
+                              final snackBar = SnackBar(
+                 
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Successfull',
+                      message:
+                          'Hey Thank You. Good Job',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+              
+
+
+              
+          
+
+
+
+                         setState(() {
+                            loading = false;
+                          });
+
+
+
+
+
+                          })).onError((error, stackTrace) => setState((){
+
+
+
+
+                              final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Something Wrong!!!!',
+                      message:
+                          'Try again later...',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+
+                   setState(() {
+                            loading = false;
+                          });
+
+
+                          }));
+      
+          },
+          child: Text("Change"),
+         ),
+        ],
+      );
+    },
+   );
+  },
+);
+
+
+
+                            
+
+
+
+                          },
+
+
+
+                          child: ListTile(
+                            
+                                           
+                              
+                                    title: Text("ID No:- ${AllData[index]["IDNo"]}", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                        
+                                    trailing: 
+                               TextButton(onPressed: (){
+                        
+                        
+                        
+                        
+                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) => ShowAttendance(StudentEmail: AllData[index]["StudentEmail"])));
+                        
+                              
+                              
+                              
+                              
+                              
+                                        }, child: Text("Show A/p", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                                         
+                                          backgroundColor: MaterialStatePropertyAll<Color>(ColorName().appColor),
+                                        ),),
+                                    
+                              
+                              
+                                    subtitle: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                       
+                                        Text("Name:${AllData[index]["StudentName"].toString().toUpperCase()}"),
+                                        Text("Phone Number:${AllData[index]["StudentPhoneNumber"]}"),
+                        
+                                        Text("Student Email: ${AllData[index]["StudentEmail"]}"),
+                        
+                                        Text("Father Phone No: ${AllData[index]["FatherPhoneNo"]}"),
+                                          
+                                        Text("Admission Date: ${AllData[index]["AdmissionDate"]}"),
+                        
+                                        Text("Type: ${AllData[index]["StudentType"]}"),
+                        
+                                        
+                        
+                                        Text("Department: ${AllData[index]["Department"]}"),
+                                        
+                                        Text("Semister: ${AllData[index]["Semister"]}"),
+                                       
+                                       Text("Category: ${AllData[index]["Category"]}"),
+                        
+                        
+                                        Text("Due: ${AllData[index]["DueAmount"]}৳"),
+                        
+                                      ],
+                                    ),
+                              
+                              
+                              
+                                  ),
+                        ),
 
 
 
