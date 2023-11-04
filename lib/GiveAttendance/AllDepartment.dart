@@ -12,14 +12,14 @@ import 'package:uttaron/Registration/StudentReg.dart';
 
 
 
-class AllDepartment extends StatefulWidget {
-  const AllDepartment({super.key});
+class AllDepartmentAttendance extends StatefulWidget {
+  const AllDepartmentAttendance({super.key});
 
   @override
-  State<AllDepartment> createState() => _AllDepartmentState();
+  State<AllDepartmentAttendance> createState() => _AllDepartmentAttendanceState();
 }
 
-class _AllDepartmentState extends State<AllDepartment> {
+class _AllDepartmentAttendanceState extends State<AllDepartmentAttendance> {
 
   bool loading = false;
 

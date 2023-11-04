@@ -114,7 +114,9 @@ flutter:
     - family: Josefin Sans
       fonts:
         - asset: lib/fonts/TiroBangla-Regular.ttf
-
+    - family: Pacifico
+      fonts:
+        - asset: lib/fonts/JosefinSans-BoldItalic.ttf
 
 
 

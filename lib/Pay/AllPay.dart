@@ -21,10 +21,11 @@ class AllPay extends StatefulWidget {
   final StudentName;
   final StudentDueAmount;
   final FatherPhoneNo;
+  final StudentIDNo;
 
 
 
-  const AllPay({super.key, required this.StudentDueAmount, required this.StudentEmail, required this.StudentName, required this.StudentPhoneNumber, required this.FatherPhoneNo});
+  const AllPay({super.key, required this.StudentDueAmount, required this.StudentEmail, required this.StudentName, required this.StudentPhoneNumber, required this.FatherPhoneNo, required this.StudentIDNo});
 
   @override
   State<AllPay> createState() => _AllPayState();
@@ -226,7 +227,7 @@ class _AllPayState extends State<AllPay> {
                 
                 
                 
-                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CourseFee(StudentDueAmount: widget.StudentDueAmount, StudentEmail: widget.StudentEmail, StudentName: widget.StudentName, StudentPhoneNumber: widget.StudentPhoneNumber, FatherPhoneNo: widget.FatherPhoneNo,)));
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) =>CourseFee(StudentDueAmount: widget.StudentDueAmount, StudentEmail: widget.StudentEmail, StudentName: widget.StudentName, StudentPhoneNumber: widget.StudentPhoneNumber, FatherPhoneNo: widget.FatherPhoneNo, StudentIDNo: widget.StudentIDNo,)));
                 
                 
                 

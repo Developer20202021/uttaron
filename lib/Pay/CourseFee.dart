@@ -31,12 +31,13 @@ class CourseFee extends StatefulWidget {
   final StudentName;
   final StudentDueAmount;
   final FatherPhoneNo;
+  final StudentIDNo;
 
 
 
 
 
-  const CourseFee({super.key, required this.StudentDueAmount, required this.StudentEmail, required this.StudentName, required this.StudentPhoneNumber, required this.FatherPhoneNo});
+  const CourseFee({super.key, required this.StudentDueAmount, required this.StudentEmail, required this.StudentName, required this.StudentPhoneNumber, required this.FatherPhoneNo, required this.StudentIDNo});
 
   @override
   State<CourseFee> createState() => _CourseFeeState();
@@ -89,7 +90,8 @@ class _CourseFeeState extends State<CourseFee> {
                         "year":"${DateTime.now().year}",
                         "DateTime":"${DateTime.now().toIso8601String()}",
                         "moneyReceiverEmail":moneyReceiverEmail,
-                        "moneyReceiverName":moneyReceiverName
+                        "moneyReceiverName":moneyReceiverName,
+                        "IDNo":widget.StudentIDNo
 
                      
                       };

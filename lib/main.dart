@@ -13,6 +13,7 @@ import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/LogIn/AdminLogIn.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Notice/NoticeUpload.dart';
+import 'package:uttaron/Pay/CourseFeeInvoice.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
 import 'package:uttaron/Teachers/AllTeachers.dart';
 import 'package:uttaron/Teachers/GiveAttendanceTeacher.dart';
@@ -50,7 +51,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: AdminLogInScreen(),
+      home: PdfPreviewPage(CashInDate: "1/2/2023", StudentEmail: "student@gmail.com", StudentCashIn: "5000", StudentIDNo: "2133445", StudentName: "Mahadi Hasan", StudentPhoneNumber: "01721915550",),
     );
   }
 }
