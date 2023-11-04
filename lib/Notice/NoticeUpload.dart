@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
+import 'package:uttaron/Notice/NoticeImageUpload.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -265,10 +266,10 @@ class _NoticeUploadState extends State<NoticeUpload> {
 
 
 
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => AccessoriesScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => NoticeImageUpload(NoticeID: NoticeID)),
+                );
 
 
 
