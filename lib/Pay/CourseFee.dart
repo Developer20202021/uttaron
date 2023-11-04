@@ -10,6 +10,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:uttaron/AllStudent/AllDepartment.dart';
+import 'package:uttaron/Pay/CourseFeeInvoice.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -178,7 +179,7 @@ class _CourseFeeState extends State<CourseFee> {
 
               Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AllDepartment()),
+                  MaterialPageRoute(builder: (context) => PdfPreviewPage(CashInDate: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}", StudentEmail: widget.StudentEmail, StudentCashIn: PaymentController.text.trim(), StudentIDNo:widget.StudentIDNo, StudentName:widget.StudentName, StudentPhoneNumber: widget.StudentPhoneNumber)),
                 );
 
 

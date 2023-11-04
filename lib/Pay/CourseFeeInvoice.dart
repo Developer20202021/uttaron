@@ -362,7 +362,7 @@ pdf.addPage(pw.Page(
 
                               pw.Padding(
                               child: pw.Text(
-                                '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+                                '${CashInDate}',
                                 style: pw.Theme.of(context).header4,
                                 textAlign: pw.TextAlign.center,
                               ),

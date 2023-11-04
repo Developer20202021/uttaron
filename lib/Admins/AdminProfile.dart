@@ -10,23 +10,23 @@ import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
 
 
 
-class TeacherProfile extends StatefulWidget {
+class AdminProfile extends StatefulWidget {
 
 
-  final String TeacherEmail;
+  final String AdminEmail;
   
 
 
 
 
 
-  const TeacherProfile({super.key, required this.TeacherEmail});
+  const AdminProfile({super.key, required this.AdminEmail});
 
   @override
-  State<TeacherProfile> createState() => _EditCustomerInfoState();
+  State<AdminProfile> createState() => _EditCustomerInfoState();
 }
 
-class _EditCustomerInfoState extends State<TeacherProfile> {
+class _EditCustomerInfoState extends State<AdminProfile> {
 
 
 bool loading = true;
@@ -43,14 +43,14 @@ List  AllData = [];
 
 
   CollectionReference _collectionRef =
-    FirebaseFirestore.instance.collection('TeacherInfo');
+    FirebaseFirestore.instance.collection('Admin');
 
-Future<void> getData(String TeacherEmail) async {
+Future<void> getData(String AdminEmail) async {
     // Get docs from collection reference
     // QuerySnapshot querySnapshot = await _collectionRef.get();
 
 
-    Query query = _collectionRef.where("TeacherEmail", isEqualTo: TeacherEmail);
+    Query query = _collectionRef.where("AdminEmail", isEqualTo: AdminEmail);
     QuerySnapshot querySnapshot = await query.get();
 
     // Get data from docs and convert map to List
@@ -100,7 +100,7 @@ Future<void> getData(String TeacherEmail) async {
 
     
     
-    getData(widget.TeacherEmail);
+    getData(widget.AdminEmail);
 
     // getSaleData();
     super.initState();
@@ -114,7 +114,7 @@ Future<void> getData(String TeacherEmail) async {
     setState(() {
             loading = true;
             
-           getData(widget.TeacherEmail);
+           getData(widget.AdminEmail);
           //  getSaleData();
 
     });
@@ -254,7 +254,7 @@ Future<void> getData(String TeacherEmail) async {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
-        title: const Text("Teacher Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+        title: const Text("Admin Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -283,7 +283,7 @@ Future<void> getData(String TeacherEmail) async {
                         child:  CircleAvatar(
                           radius: 70,
                           backgroundImage: NetworkImage(
-                            "${AllData[0]["TeacherImageUrl"]}",
+                            "${AllData[0]["AdminImageUrl"]}",
                           ),
                         ),
                       ),
@@ -323,7 +323,7 @@ Future<void> getData(String TeacherEmail) async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["TeacherName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["AdminName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -349,7 +349,7 @@ Future<void> getData(String TeacherEmail) async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["TeacherPhoneNumber"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["AdminPhoneNumber"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -376,7 +376,7 @@ Future<void> getData(String TeacherEmail) async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["TeacherEmail"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["AdminEmail"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
@@ -409,68 +409,12 @@ Future<void> getData(String TeacherEmail) async {
                                     
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["TeacherAddress"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
+                                      child: Text("${AllData[0]["AdminAddress"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
                                     )),
                                 
                                 ]),
 
 
-
-
-                            
-
-                                   TableRow(
-                          
-                          decoration: BoxDecoration(color: Colors.grey[200]),
-                          children: [
-                                  Container(
-                                    
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Department", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                    )),
-                                  
-                                  
-                                  Container(
-                                    
-                                    
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["Department"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
-                                    )),
-                                
-                                ]),
-
-
-
-                                
-                                   TableRow(
-                          
-                          decoration: BoxDecoration(color: Colors.grey[200]),
-                          children: [
-                                  Container(
-                                    
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("Subject", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold),),
-                                    )),
-                                  
-                                  
-                                  Container(
-                                    
-                                    
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text("${AllData[0]["SubjectName"].toString().toUpperCase()}", style: TextStyle(fontSize: 15.0),),
-                                    )),
-                                
-                                ]),
-
-
-                                
-
-
-                         
                           
       
       
@@ -489,78 +433,6 @@ Future<void> getData(String TeacherEmail) async {
 
 
 
-
-       
-
-
-
-
-      
-      
-      
-      
-      
-      
-      
-      
-
-
-
-                      
-
-      
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                    
-                        children: [
-      
-                          Container(width: 150, child:TextButton(onPressed: (){
-      
-      
-                                  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExamFeeHistory(TeacherEmail: widget.TeacherEmail)));
-      
-      
-                           
-      
-      
-      
-      
-      
-                          }, child: Text("Salary History", style: TextStyle(color: Colors.white),), style: ButtonStyle(
-                           
-                  backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
-                ),),),
-
-
-
-
-
-                
-                
-
-
-
-
-
-
-                        ],
-                      ),
-      
-      
-                 
-      
-      
-      
-      
-                     
-      
-      
-      
-              
-              
-              
-              
-              
                     ],
                   ),
                 ),
@@ -575,7 +447,7 @@ Future<void> getData(String TeacherEmail) async {
 
           // Navigator.push(
           //               context,
-          //               MaterialPageRoute(builder: (context) => EditPreviousCustomer(TeacherEmail: AllData[0]["TeacherEmail"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
+          //               MaterialPageRoute(builder: (context) => EditPreviousCustomer(AdminEmail: AllData[0]["AdminEmail"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
           //             );
 
 

@@ -7,6 +7,7 @@ import 'package:uttaron/AdminDashBoard/AllDueStudents.dart';
 import 'package:uttaron/AdminDashBoard/AllStudentSetDue.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyExamFeeCollection.dart';
+import 'package:uttaron/Admins/AllAdmins.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: PdfPreviewPage(CashInDate: "1/2/2023", StudentEmail: "student@gmail.com", StudentCashIn: "5000", StudentIDNo: "2133445", StudentName: "Mahadi Hasan", StudentPhoneNumber: "01721915550",),
+      home: AllAdmins(indexNumber: ""),
     );
   }
 }
