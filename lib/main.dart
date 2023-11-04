@@ -10,6 +10,7 @@ import 'package:uttaron/AdminDashBoard/MonthlyExamFeeCollection.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
+import 'package:uttaron/LogIn/AdminLogIn.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Notice/NoticeUpload.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: AllDepartment(),
+      home: AdminLogInScreen(),
     );
   }
 }
