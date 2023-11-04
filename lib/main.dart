@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -29,6 +30,11 @@ void main() async{
     options: FirebaseOptions(apiKey: "AIzaSyCtca9qgQyElzVEMbjUkUrzYsE94fmhhN8", appId: "1:145894825045:android:f8792d3a131fca15aa88dc", messagingSenderId: "145894825045", projectId: "uttaronapp")
     
   );
+
+
+  await Future.delayed(const Duration(seconds: 13));
+
+  FlutterNativeSplash.remove();
 
 
   await Hive.initFlutter();
