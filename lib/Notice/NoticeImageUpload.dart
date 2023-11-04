@@ -247,7 +247,7 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
 
                 // user Data Update and show snackbar
 
-                  docUser.doc(ImageID).update(UpadateData).then((value) => setState((){
+                  docUser.doc(ImageID).set(UpadateData).then((value) => setState((){
 
 
                       setState(() {

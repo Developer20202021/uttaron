@@ -161,7 +161,7 @@ class _NoticeUploadState extends State<NoticeUpload> {
 
                  print(value);
                },
-               maxLines: 13,
+               maxLines: 8,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Description',
@@ -183,7 +183,7 @@ class _NoticeUploadState extends State<NoticeUpload> {
                     
                     
                     ),
-                controller: TitleController,
+                controller: DescriptionController,
               ),
 
 
