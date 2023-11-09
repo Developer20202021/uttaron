@@ -484,7 +484,7 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
             dialogType: DialogType.success,
             animType: AnimType.rightSlide,
             title: 'Thank You',
-            desc: 'Your Registration Successfull. Now Lets go',
+            desc: 'Your Notice Upload Successfull. Now Lets go',
        
             btnOkOnPress: () {
 
