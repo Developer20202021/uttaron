@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Uttaron',
       theme: ThemeData(
         fontFamily: GoogleFonts.spaceGrotesk().fontFamily,
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
