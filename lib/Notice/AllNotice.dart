@@ -294,7 +294,7 @@ Future<void> getData() async {
       body:loading?Center(child: CircularProgressIndicator()): DataLoad == "0"? Center(child: Text("No Data Available")): RefreshIndicator(
         onRefresh: refresh,
         child: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(color: Colors.white,),
           itemBuilder: (BuildContext context, int index) {
             return Padding(
                   padding:  EdgeInsets.all(8.0),
@@ -349,6 +349,13 @@ Future<void> getData() async {
                                     children: [
                                      
                                       Text("${AllData[index]["Description"].toString()}", style: TextStyle(fontFamily: 'Josefin Sans',),),
+
+
+
+                                      Text("Date: ${AllData[index]["NoticeUplaodDateTime"].toString().split("T")[0]}", ),
+
+
+                                       Text("Time: ${AllData[index]["NoticeUplaodDateTime"].toString().split("T")[1].split(".")[0]}", ),
                                    
 
 
@@ -363,107 +370,110 @@ Future<void> getData() async {
 
 
 
-                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            TextButton(onPressed: () async{
-
-
-
-
-
-                        
-
-
-      AwesomeDialog(
-            context: context,
-            dialogType: DialogType.question,
-            animType: AnimType.rightSlide,
-            title: 'Are You Sure?',
-            desc: 'You want to delete this notice',
-          
-            btnOkOnPress: () async{
-
-
-              setState(() {
-                
-                loading = true;
-              });
-
-              final collection = FirebaseFirestore.instance.collection('Notice');
-            collection 
-                .doc(AllData[index]["Notice"]) // <-- Doc ID to be deleted. 
-                .delete() // <-- Delete
-                .then((_) => setState((){
-
-                  getData();
-
-                  loading = false;
-                  print('Deleted');
-
-
-
-                }))
-                .catchError((error) => print('Delete failed: $error'));
-
-
-
-      
-      
-      
-      
-
-
-          
-            },
-
-            btnCancelOnPress: () {
-
-
-          
-            },
-          ).show();
-
-
-
-
-                             
-      
-                                      }, child: Text("Delete", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
-                                       
-                  backgroundColor: MaterialStatePropertyAll<Color>(Colors.red.shade400),
-                ),),
-
-
-
-
-                SizedBox(height: 2,),
-
-
-
-
-
+                                 Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                                       
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                 
+                                                             TextButton(onPressed: () async{
+                                 
+                                 
+                                 
+                                 
+                                 
+                                                         
+                                 
+                                 
+                                       AwesomeDialog(
+                                             context: context,
+                                             dialogType: DialogType.question,
+                                             animType: AnimType.rightSlide,
+                                             title: 'Are You Sure?',
+                                             desc: 'You want to delete this notice',
                                            
-
-                                    ],
-                                  ),
+                                             btnOkOnPress: () async{
+                                 
+                                 
+                                               setState(() {
+                                                 
+                                                 loading = true;
+                                               });
+                                 
+                                               final collection = FirebaseFirestore.instance.collection('Notice');
+                                             collection 
+                                                 .doc(AllData[index]["Notice"]) // <-- Doc ID to be deleted. 
+                                                 .delete() // <-- Delete
+                                                 .then((_) => setState((){
+                                 
+                                                   getData();
+                                 
+                                                   loading = false;
+                                                   print('Deleted');
+                                 
+                                 
+                                 
+                                                 }))
+                                                 .catchError((error) => print('Delete failed: $error'));
+                                 
+                                 
+                                 
+                                       
+                                       
+                                       
+                                       
+                                 
+                                 
+                                           
+                                             },
+                                 
+                                             btnCancelOnPress: () {
+                                 
+                                 
+                                           
+                                             },
+                                           ).show();
+                                 
+                                 
+                                 
+                                 
+                                                              
+                                       
+                                        }, child: Text("Delete", style: TextStyle(color: Colors.white, fontSize: 12),), style: ButtonStyle(
+                                         
+                                                   backgroundColor: MaterialStatePropertyAll<Color>(Colors.red.shade400),
+                                                 ),),
+                                 
+                                 
+                                 
+                                 
+                                                 SizedBox(height: 2,),
+                                 
+                                 
+                                 
+                                 
+                                 
+                                             
+                                 
+                                      ],
+                                    ),
+                                 ),
 
 
 
