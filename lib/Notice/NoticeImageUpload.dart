@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
+import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -488,10 +489,10 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
             btnOkOnPress: () {
 
 
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => AdminLogInScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AllNotice(indexNumber: "2")),
+                );
             },
             )..show();
 

@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
+import 'package:uttaron/Registration/AllRegistration.dart';
 
 
 
@@ -924,10 +925,10 @@ Future NIDBackImageCamera(BuildContext context) async {
             btnOkOnPress: () {
 
 
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => AdminLogInScreen()),
-                // );
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AllRegistration()),
+                );
             },
             )..show();
 

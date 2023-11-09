@@ -634,7 +634,7 @@ Future<void> getSearchData(String StudentIDNo) async {
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
                 
-                   AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"?Icon(Icons.check, color: Colors.green,):TextButton(onPressed: () async{
+                   AllData[index]["LastAttendance"] =="${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"?Text(""):TextButton(onPressed: () async{
 
 
                     setState(() {

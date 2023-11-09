@@ -12,6 +12,7 @@ import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
+import 'package:uttaron/Registration/AllRegistration.dart';
 
 class TeacherRegistration extends StatefulWidget {
   const TeacherRegistration({super.key});
@@ -523,7 +524,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
                      
                       
-                        await credential.user?.sendEmailVerification();
+                   
 
 
 
@@ -563,9 +564,9 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
-                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState((){
+                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState(()async{
 
-
+                           await credential.user?.sendEmailVerification();
 
 
                        final snackBar = SnackBar(
@@ -592,10 +593,10 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
-                //    Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => AdminImageUpload(AdminEmail: myEmailController.text.trim().toLowerCase())),
-                // );
+                   Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AllRegistration()),
+                );
 
 
 

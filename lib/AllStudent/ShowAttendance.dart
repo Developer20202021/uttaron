@@ -32,7 +32,7 @@ class _ShowAttendanceState extends State<ShowAttendance> {
   bool loading = true;
 
 
-  var SelectedVisibleMonth ="${DateTime.now().month}/${DateTime.now().year}";
+  var SelectedVisibleMonth ="All Month Presence History";
 
 
 
@@ -495,7 +495,7 @@ Future<void> getSpecificAbsenceData(String StudentEmail, String SelectedMonth) a
                    lineWidth: 15.0,
                    percent: (totalPresence/(totalAbsence+totalPresence)).isNaN?0.0:totalPresence/(totalAbsence+totalPresence),
                    center: Text(
-                     "${(totalPresence/(totalAbsence+totalPresence)).isNaN?"0.0":(totalPresence/(totalAbsence+totalPresence))*100}%",
+                     "${(totalPresence/(totalAbsence+totalPresence)).isNaN?"0.0":((totalPresence/(totalAbsence+totalPresence))*100).toStringAsFixed(2)}%",
                      style: new TextStyle(fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.bold),
                    ),
                    

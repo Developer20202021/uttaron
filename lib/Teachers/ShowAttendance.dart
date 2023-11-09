@@ -309,7 +309,7 @@ Future<void> getAbsenceData(String TeacherEmail) async {
                    lineWidth: 15.0,
                    percent: totalPresence/(totalAbsence+totalPresence),
                    center: Text(
-                     "${(totalPresence/(totalAbsence+totalPresence))*100}%",
+                     "${((totalPresence/(totalAbsence+totalPresence))*100).toStringAsFixed(2)}%",
                      style: new TextStyle(fontSize: 16.0, color: Colors.black, fontWeight: FontWeight.bold),
                    ),
                    

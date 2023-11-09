@@ -441,7 +441,6 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
                      
                       
-                        await credential.user?.sendEmailVerification();
 
 
 
@@ -477,9 +476,10 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
 
-                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState((){
+                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState(()async{
 
 
+                        await credential.user?.sendEmailVerification();
 
 
                        final snackBar = SnackBar(
