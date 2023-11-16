@@ -17,6 +17,7 @@ import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Notice/NoticeUpload.dart';
 import 'package:uttaron/Pay/CourseFeeInvoice.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
+import 'package:uttaron/Registration/StudentReg.dart';
 import 'package:uttaron/Teachers/AllTeachers.dart';
 import 'package:uttaron/Teachers/GiveAttendanceTeacher.dart';
 
@@ -58,7 +59,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: AdminLogInScreen(),
+      home: StudentRegistration(),
     );
   }
 }

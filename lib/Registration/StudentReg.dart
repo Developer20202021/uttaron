@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +13,7 @@ import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
+import 'package:uttaron/Registration/OtpPage.dart';
 import 'package:uttaron/Registration/StudentImageUpload.dart';
 
 class StudentRegistration extends StatefulWidget {
@@ -54,6 +56,9 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
 
 
+var rng = new Random();
+var code = Random().nextInt(900000) + 100000;
+
 
 
 
@@ -67,6 +72,8 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   
     super.initState();
     // FlutterNativeSplash.remove();
+
+    print(code);
     
   }
 
@@ -1008,7 +1015,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
                      
                       
-                        await credential.user?.sendEmailVerification();
+                        // await credential.user?.sendEmailVerification();
 
 
 
@@ -1056,7 +1063,9 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                         "StudentStatus":"new",
                         "Category":SelectedCategory,
                         "LastAttendance":"",
-                        "AccountStatus":"open"
+                        "AccountStatus":"open",
+                        "OtpCode":code.toString(),
+                        "PhoneVerify":"false"
 
                      
                       };
@@ -1064,8 +1073,26 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
 
 
-                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState((){
+                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState(() async{
 
+
+
+                  var OtpMsg ="Your OTP ${code} Uttaron. InanSoft";
+
+                  final response = await http
+                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${myPhoneNumberController.text.trim()}&message=${OtpMsg}'));
+
+                  if (response.statusCode == 200) {
+                    // If the server did return a 200 OK response,
+                    // then parse the JSON.
+
+                    print("");
+                    
+                  } else {
+                    // If the server did not return a 200 OK response,
+                    // then throw an exception.
+                    throw Exception('Failed to load album');
+                  }
 
 
 
@@ -1095,7 +1122,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
                    Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StudentImageUpload(AdminEmail: myEmailController.text.trim().toLowerCase())),
+                  MaterialPageRoute(builder: (context) => OtpPage(StudentPhoneNumber: myPhoneNumberController.text.trim(), StudentEmail: myEmailController.text.trim())),
                 );
 
 
@@ -1128,35 +1155,6 @@ class _StudentRegistrationState extends State<StudentRegistration> {
                             )));
 
 
-
-
-                    
-                  
-                  // } else {
-                  //   // If the server did not return a 200 OK response,
-                  //   // then throw an exception.
-                  //   throw Exception('Failed to load album');
-                  // }
-
-                 
-
-
-                   
-
-                     
-
-                    
-
-          
-
-
-
-                  
-
-
-
-                   
-              
 
          
                 setState(() {

@@ -230,7 +230,8 @@ class _NoticeUploadState extends State<NoticeUpload> {
                   "Description":DescriptionController.text.trim(),
                   "ImageLink":[],
                   "Notice":NoticeID.toString(),
-                  "NoticeUplaodDateTime":"${DateTime.now().toIso8601String()}"
+                  "NoticeUplaodDateTime":"${DateTime.now().toIso8601String()}",
+                  "Date":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}"
 
 
                
