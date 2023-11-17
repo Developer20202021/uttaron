@@ -69,6 +69,230 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
+    // All Error Message Show
+
+  bool NameError = false;
+  bool phoneNumberError = false;
+  bool EmailError = false;
+  bool addressError = false;
+  bool passwordError = false;
+  bool FatherPhoneError = false;
+  bool CourseFeeError = false;
+  bool IDError = false;
+
+
+
+
+
+ void checkEmailTextField() {
+
+
+    if (myEmailController.text.isEmpty) {
+
+      setState(() {
+
+        EmailError=true;
+        
+      });
+      
+    }
+   else{
+
+    setState(() {
+      EmailError=false;
+    });
+
+
+    }
+
+
+  }
+
+
+
+
+  void checkPhoneNumberTextField(){
+
+
+     if(myPhoneNumberController.text.isEmpty){
+
+      setState(() {
+        phoneNumberError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        phoneNumberError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
+    void checkNameTextField(){
+
+
+     if(myAdminNameController.text.isEmpty){
+
+      setState(() {
+        NameError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        NameError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+  void checkAddressTextField(){
+
+
+     if(myAddressController.text.isEmpty){
+
+      setState(() {
+        addressError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        addressError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+  void checkPasswordTextField(){
+
+
+     if(myPassController.text.isEmpty){
+
+      setState(() {
+        passwordError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        passwordError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
+
+
+
+  void checkFatherPhoneNoTextField(){
+
+
+     if(FatherPhoneNoController.text.isEmpty){
+
+      setState(() {
+        FatherPhoneError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        FatherPhoneError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
+
+    void checkCourseFeeTextField(){
+
+
+     if(CourseFeeController.text.isEmpty){
+
+      setState(() {
+        CourseFeeError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+       CourseFeeError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+    void checkIDTextField(){
+
+
+     if(IDNoController.text.isEmpty){
+
+      setState(() {
+        IDError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+       IDError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
 
 
 
@@ -186,8 +410,31 @@ var code = Random().nextInt(900000) + 100000;
             
             
                     TextField(
+
+                        onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          myAdminNameController.text =value;
+                        });
+                      },
                       
                       decoration: InputDecoration(
+
+                      prefixIcon: Icon(Icons.person, color: ColorName().appColor,),
+
+                      helperText: NameError?'Required Enter Full Name':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Name',
                            labelStyle: TextStyle(
@@ -230,9 +477,35 @@ var code = Random().nextInt(900000) + 100000;
             
             
                     TextField(
+
+                         onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          myPhoneNumberController.text =value;
+                        });
+
+
+
+                      },
+
+
+
                       keyboardType: TextInputType.phone,
-                      focusNode: myFocusNode,
+                     
                       decoration: InputDecoration(
+
+                      prefixIcon: Icon(Icons.phone_android, color: ColorName().appColor,),
+
+                      helperText: phoneNumberError?'Required Enter Phone Number':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
                           border: OutlineInputBorder(),
                           labelText: 'Enter Phone Number',
                            labelStyle: TextStyle(
@@ -268,8 +541,39 @@ var code = Random().nextInt(900000) + 100000;
             
             
                     TextField(
+
+                    
+                    onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          myEmailController.text = value;
+                        });
+
+
+                      },
+
+
+
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
+
+
+                      prefixIcon: Icon(Icons.email, color: ColorName().appColor,),
+
+                      helperText: EmailError?'Required Enter Email':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Email',
                            labelStyle: TextStyle(
@@ -300,9 +604,33 @@ var code = Random().nextInt(900000) + 100000;
 
                     
                     TextField(
+
+                    onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          myAddressController.text = value;
+                        });},
+
+
+
                       keyboardType: TextInputType.streetAddress,
                       
                       decoration: InputDecoration(
+
+                      prefixIcon: Icon(Icons.location_city, color: ColorName().appColor,),
+
+                      helperText: addressError?'Required Enter Address':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Address',
                            labelStyle: TextStyle(
@@ -348,8 +676,37 @@ var code = Random().nextInt(900000) + 100000;
 
 
                     TextField(
+
+                  
+
+                   onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+
+
+
+                        setState(() {
+                          myPassController.text =value;
+                        });
+                      },
                       
                       decoration: InputDecoration(
+
+                      
+                       prefixIcon: Icon(Icons.password, color: ColorName().appColor,),
+
+                      helperText: passwordError?'Required Enter password':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Password',
                            labelStyle: TextStyle(
@@ -575,8 +932,35 @@ var code = Random().nextInt(900000) + 100000;
 
 
                     TextField(
+
+                  
+                  onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          FatherPhoneNoController.text =value;
+                        });
+                      },
+
+
+
                       keyboardType: TextInputType.phone,
                       decoration: InputDecoration(
+
+                      prefixIcon: Icon(Icons.phone_android, color: ColorName().appColor,),
+
+                      helperText: FatherPhoneError?'Required Enter Father Phone No':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Father Phone No',
                            labelStyle: TextStyle(
@@ -662,8 +1046,35 @@ var code = Random().nextInt(900000) + 100000;
 
 
                     TextField(
+
+                      onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+                        setState(() {
+                          CourseFeeController.text = value;
+                        });
+
+
+                      },
+
+
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+
+                    prefixIcon: Icon(Icons.payment, color: ColorName().appColor,),
+
+                      helperText: CourseFeeError?'Required Enter Course Fee':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+                    suffixText: "৳",
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Course Fee',
                            labelStyle: TextStyle(
@@ -707,8 +1118,39 @@ var code = Random().nextInt(900000) + 100000;
 
 
                     TextField(
+
+                      onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+                        checkFatherPhoneNoTextField();
+                        checkCourseFeeTextField();
+                        checkIDTextField();
+
+
+
+                        setState(() {
+                          IDNoController.text = value;
+                        });
+
+
+                      },
+
+
+
+
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
+
+                    prefixIcon: Icon(Icons.numbers, color: ColorName().appColor,),
+
+                      helperText: IDError?'Required Enter ID NO':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+                   
+
+
                           border: OutlineInputBorder(),
                           labelText: 'ID No',
                            labelStyle: TextStyle(
@@ -972,7 +1414,7 @@ var code = Random().nextInt(900000) + 100000;
 
 
             
-                    RegCode==RegCodeController.text.trim().toLowerCase()?Row(
+                    RegCode==RegCodeController.text.trim().toLowerCase()&& myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty && IDNoController.text.isNotEmpty && CourseFeeController.text.isNotEmpty && FatherPhoneNoController.text.isNotEmpty && SelectedValue.isNotEmpty && SelectedSemisterValue.isNotEmpty && SelectedCategory.isNotEmpty?Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{

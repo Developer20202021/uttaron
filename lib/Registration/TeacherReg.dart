@@ -385,6 +385,8 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
                       },
+
+
                       keyboardType: TextInputType.phone,
                   
                       decoration: InputDecoration(
@@ -446,6 +448,9 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
                       },
+
+
+                      
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
 

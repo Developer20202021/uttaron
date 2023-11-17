@@ -187,6 +187,9 @@ bool _passVisibility = true;
                   autofillHints: [AutofillHints.email],
                   
                   decoration: InputDecoration(
+
+                    prefixIcon: Icon(Icons.email, color: ColorName().appColor,),
+
                       border: OutlineInputBorder(),
                       labelText: 'Enter Email',
                        labelStyle: TextStyle(
@@ -227,6 +230,8 @@ bool _passVisibility = true;
                   obscureText: _passVisibility,
                   obscuringCharacter:"*",
                   decoration: InputDecoration(
+                  
+                  prefixIcon: Icon(Icons.lock, color: ColorName().appColor,),
 
                   suffixIcon: IconButton(
                       icon: _passVisibility
