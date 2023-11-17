@@ -41,6 +41,149 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
 
+  // All Error Message Show
+
+  bool NameError = false;
+  bool phoneNumberError = false;
+  bool EmailError = false;
+  bool addressError = false;
+  bool passwordError = false;
+
+
+
+
+
+ void checkEmailTextField() {
+
+
+    if (myEmailController.text.isEmpty) {
+
+      setState(() {
+
+        EmailError=true;
+        
+      });
+      
+    }
+   else{
+
+    setState(() {
+      EmailError=false;
+    });
+
+
+    }
+
+
+  }
+
+
+
+
+  void checkPhoneNumberTextField(){
+
+
+     if(myPhoneNumberController.text.isEmpty){
+
+      setState(() {
+        phoneNumberError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        phoneNumberError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
+    void checkNameTextField(){
+
+
+     if(myAdminNameController.text.isEmpty){
+
+      setState(() {
+        NameError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        NameError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+  void checkAddressTextField(){
+
+
+     if(myAddressController.text.isEmpty){
+
+      setState(() {
+        addressError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        addressError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+  void checkPasswordTextField(){
+
+
+     if(myPassController.text.isEmpty){
+
+      setState(() {
+        passwordError =true;
+      });
+
+    }
+    else{
+
+
+    setState(() {
+        passwordError =false;
+      });
+
+    }
+
+    
+  }
+
+
+
+
+
+
+
+
 
 
 
@@ -116,18 +259,20 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                   children: [
 
 
-                   errorTxt.isNotEmpty?  Padding(
-               padding: const EdgeInsets.all(8.0),
-               child: Container(
-             
-                         color: Colors.red.shade400,
-                         
-                         
-                         child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
-                         )),
-             ):Text(""),
+                   errorTxt.isNotEmpty?  Center(
+                     child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                
+                           color: Colors.red.shade400,
+                           
+                           
+                           child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                           )),
+                                ),
+                   ):Text(""),
 
 
 
@@ -169,8 +314,28 @@ class _AdminRegistrationState extends State<AdminRegistration> {
             
             
                     TextField(
-                      
+
+                      onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+
+                        setState(() {
+                          myAdminNameController.text =value;
+                        });
+                      },
+                    
+
                       decoration: InputDecoration(
+
+                      prefixIcon: Icon(Icons.person, color: ColorName().appColor,),
+
+                      helperText: NameError?'Required Enter Full Name':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Name',
                            labelStyle: TextStyle(
@@ -182,7 +347,7 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                           //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
                           //     ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                                borderSide: BorderSide(width: 3, color:Theme.of(context).primaryColor),
                               ),
                               errorBorder: OutlineInputBorder(
                                 borderSide: BorderSide(
@@ -213,14 +378,37 @@ class _AdminRegistrationState extends State<AdminRegistration> {
             
             
                     TextField(
+
+                      onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+
+                        setState(() {
+                          myPhoneNumberController.text =value;
+                        });
+
+
+
+                      },
+
+
                       keyboardType: TextInputType.phone,
-                      focusNode: myFocusNode,
+                     
                       decoration: InputDecoration(
+
+                        
+                      prefixIcon: Icon(Icons.phone_android, color: ColorName().appColor,),
+
+                      helperText: phoneNumberError?'Required Enter Phone Number':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Phone Number',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
+                  
                           hintText: 'Enter Your Phone Number',
             
                           //  enabledBorder: OutlineInputBorder(
@@ -251,8 +439,30 @@ class _AdminRegistrationState extends State<AdminRegistration> {
             
             
                     TextField(
+                         onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+
+                        setState(() {
+                          myEmailController.text = value;
+                        });
+
+
+                      },
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
+
+                        
+                      prefixIcon: Icon(Icons.email, color: ColorName().appColor,),
+
+                      helperText: EmailError?'Required Enter Email':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Email',
                            labelStyle: TextStyle(
@@ -283,9 +493,31 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
                     
                     TextField(
+                      onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+
+                        setState(() {
+                          myAddressController.text = value;
+                        });
+
+
+
+                      },
                       keyboardType: TextInputType.streetAddress,
                       
                       decoration: InputDecoration(
+
+                        
+                      prefixIcon: Icon(Icons.location_city, color: ColorName().appColor,),
+
+                      helperText: addressError?'Required Enter Address':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Address',
                            labelStyle: TextStyle(
@@ -331,8 +563,29 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
                     TextField(
+
+                         onChanged: (value) {
+                        checkAddressTextField();
+                        checkEmailTextField();
+                        checkNameTextField();
+                        checkPasswordTextField();
+                        checkPhoneNumberTextField();
+
+                        setState(() {
+                          myPassController.text =value;
+                        });
+                      },
                       
                       decoration: InputDecoration(
+
+                      
+                      
+                      prefixIcon: Icon(Icons.password, color: ColorName().appColor,),
+
+                      helperText: passwordError?'Required Enter password':"",
+                      helperStyle: TextStyle(color: Colors.red.shade400),
+
+
                           border: OutlineInputBorder(),
                           labelText: 'Enter Password',
                            labelStyle: TextStyle(
@@ -415,10 +668,12 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
             
-                   RegCode==RegCodeController.text.trim().toLowerCase()? Row(
+                   RegCode==RegCodeController.text.trim().toLowerCase() && myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
+
+                          
 
                    
 

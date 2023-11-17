@@ -10,6 +10,7 @@ import 'package:hive/hive.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/LogIn/AdminNotApprove.dart';
 import 'package:uttaron/LogIn/EmailNotVerified.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
@@ -93,7 +94,7 @@ bool _passVisibility = true;
       appBar: AppBar(
     systemOverlayStyle: SystemUiOverlayStyle(
       // Navigation bar
-      statusBarColor: Theme.of(context).primaryColor, // Status bar
+      statusBarColor: ColorName().appColor, // Status bar
     ),
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         automaticallyImplyLeading: false,
