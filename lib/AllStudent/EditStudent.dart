@@ -1117,6 +1117,10 @@ class _EditStudentState extends State<EditStudent> {
 
                         // print(credential.user!.email.toString());
                       } on FirebaseAuthException catch (e) {
+
+
+
+                        
                         if (e.code == 'weak-password') {
 
                           setState(() {
@@ -1136,11 +1140,6 @@ class _EditStudentState extends State<EditStudent> {
                         loading = false;
                         print(e);
                       }
-
-
-
-
-
 
 
 

@@ -40,7 +40,7 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   TextEditingController RegCodeController = TextEditingController();
 
 
-    String errorTxt = "";
+  String errorTxt = "";
 
   String RegCode ="uttaron123";
 

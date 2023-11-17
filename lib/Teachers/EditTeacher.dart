@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
@@ -14,22 +16,40 @@ import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
 import 'package:uttaron/Registration/EmailNotVerified.dart';
+import 'package:path/path.dart';
+import 'package:uttaron/Teachers/AllTeachers.dart';
 
-class TeacherRegistration extends StatefulWidget {
-  const TeacherRegistration({super.key});
+
+
+
+
+
+class EditTeacher extends StatefulWidget {
+
+
+  final TeacherEmail;
+  final TeacherAddress;
+  final TeacherPhoneNumber;
+  final TeacherName;
+  final SubjectName;
+  final DepartmentName;
+
+
+
+
+  const EditTeacher({super.key, required this.TeacherEmail, required this.DepartmentName, required this.SubjectName, required this.TeacherAddress,required this.TeacherName, required this.TeacherPhoneNumber});
 
   @override
-  State<TeacherRegistration> createState() => _TeacherRegistrationState();
+  State<EditTeacher> createState() => _EditTeacherState();
 }
 
-class _TeacherRegistrationState extends State<TeacherRegistration> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+class _EditTeacherState extends State<EditTeacher> {
+
   TextEditingController myAddressController = TextEditingController();
   TextEditingController myPhoneNumberController = TextEditingController();
   TextEditingController myAdminNameController = TextEditingController();
   TextEditingController SubjectController = TextEditingController();
-  TextEditingController RegCodeController = TextEditingController();
+
 
 
 
@@ -39,11 +59,264 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
  bool loading = false;
 
+  File? _photo;
+
+  String image64 = "";
+
 
  
   String errorTxt = "";
 
-  String RegCode ="uttaron123";
+
+
+
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+
+        final bytes = File(pickedFile.path).readAsBytesSync();
+
+        setState(() {
+          image64 = base64Encode(bytes);
+        });
+
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+
+  
+  Future imgFromCamera(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+  
+  Future uploadFile(BuildContext context) async {
+    if (_photo == null) return;
+    
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    print(_photo!.path);
+
+    try {
+
+
+      setState(() {
+        loading = true;
+      });
+
+
+
+   var request = await http.post(Uri.parse("https://api.imgbb.com/1/upload?key=9a7a4a69d9a602061819c9ee2740be89"),  body: {
+          'image':'$image64',
+        } ).then((value) => setState(() {
+
+
+          print(jsonDecode(value.body));
+
+
+
+          var serverData = jsonDecode(value.body);
+
+          var serverImageUrl = serverData["data"]["url"];
+
+          print(serverImageUrl);
+
+          updateData(serverImageUrl,context);
+
+
+
+
+
+
+        })).onError((error, stackTrace) => print(error));
+
+
+
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
+
+
+  
+  Future updateData(String AdminImageUrl,BuildContext context) async{
+
+    setState(() {
+        loading = true;
+      });
+
+
+
+      print("__________________________________________________________${widget.TeacherEmail}");
+
+
+         final docUser = FirebaseFirestore.instance.collection("TeacherInfo").doc(widget.TeacherEmail);
+
+                  final UpadateData ={
+
+                    "TeacherImageUrl":AdminImageUrl
+
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) => setState((){
+
+
+                      setState(() {
+                            loading = false;
+                       
+                          });
+
+
+                    print("Done");
+
+
+
+
+                
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Your Image Upload Successfull',
+                      message:
+                          'Your Image Upload Successfull',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+                  })).onError((error, stackTrace) => setState((){
+
+                    loading = false;
+
+
+
+
+                    
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Image Upload Failed',
+                      message:
+                          'Image Upload Failed',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+
+
+
+
+
+                    print(error);
+
+                  }));
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  void setDepartment(){
+
+    setState(() {
+      SelectedValue = widget.DepartmentName;
+    });
+
+
+
+
+  }
+
+
 
 
 
@@ -61,6 +334,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
   
     super.initState();
     // FlutterNativeSplash.remove();
+    setDepartment();
     
   }
 
@@ -69,6 +343,13 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+    myAddressController.text = widget.TeacherAddress;
+    myAdminNameController.text = widget.TeacherName;
+    myPhoneNumberController.text = widget.TeacherPhoneNumber;
+    SubjectController.text = widget.SubjectName;
+
+
 
 
 
@@ -142,6 +423,46 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
+
+
+                        
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                _showPicker(context);
+              },
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: _photo != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.file(
+                          _photo!,
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 200,
+                        height: 200,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey[800],
+                        ),
+                      ),
+              ),
+            ),
+          ),
+
+          SizedBox(height: 75,),
+
+
+
                     
                     // Center(
                     //   child: Lottie.asset(
@@ -200,8 +521,47 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
             
+  
             
             
+         
+                    TextField(
+                      keyboardType: TextInputType.streetAddress,
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Address',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'Enter Address',
+            
+                          //  enabledBorder: OutlineInputBorder(
+                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //     ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                              ),
+                          
+                          
+                          ),
+                      controller: myAddressController,
+                    ),
+            
+            
+
+                   
+                    SizedBox(
+                      height: 15,
+                    ),
+
+
+
+                    
                     TextField(
                       keyboardType: TextInputType.phone,
                       focusNode: myFocusNode,
@@ -232,79 +592,6 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
             
             
             
-                    SizedBox(
-                      height: 15,
-                    ),
-            
-            
-            
-            
-            
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Email',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Email',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-                    SizedBox(
-                      height: 15,
-                    ),
-
-
-
-                    
-                    TextField(
-                      keyboardType: TextInputType.streetAddress,
-                      
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Address',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Enter Address',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myAddressController,
-                    ),
-            
-            
-            
-            
-                 
-        
-                   
                     SizedBox(
                       height: 15,
                     ),
@@ -382,46 +669,6 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
-                              SizedBox(height: 11,),
-
-
-
-
-
-           
-
-
-
-
-
-
-
-                    TextField(
-                      
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Password',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Enter Your Password',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myPassController,
-                    ),
-            
-
             SizedBox(
                       height: 15,
                     ),
@@ -429,46 +676,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
-              
-              
-              TextField(
-                onChanged: (value) {
-
-
-                  setState(() {
-                    RegCodeController.text = value;
-                  });
-
-                  
-                },
-                      
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Reg Code',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Enter Reg Code',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: RegCodeController,
-                    ),
-            
-
-            SizedBox(
-                      height: 15,
-                    ),
+             
 
 
 
@@ -481,7 +689,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
             
-                    RegCode==RegCodeController.text.trim().toLowerCase()?Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
@@ -498,20 +706,8 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
                       try {
-                        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: myEmailController.text.trim(),
-                          password: myPassController.text.trim(),
-                        );
 
 
-                        
-
-                      
-
-
-
-                       
-                    await credential.user?.updateDisplayName(myAdminNameController.text.trim().toLowerCase());
 
 
 
@@ -520,18 +716,11 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
                       final jsonData ={
 
                         "TeacherName":myAdminNameController.text.trim().toLowerCase(),
-                        "TeacherEmail":myEmailController.text.trim().toLowerCase(),
-                        "emailVerified":"",
-                        "AdminApprove":"false",
-                        "registrationType":"teacher",
                         "TeacherPhoneNumber":myPhoneNumberController.text.trim(),
-                        "TeacherPassword":myPassController.text.trim(),
                         "TeacherAddress":myAddressController.text.trim(),
                         "SubjectName":SubjectController.text.trim(),
                         "Department":SelectedValue,
-                        "TeacherStatus":"new",
-                        "LastAttendance":"",
-                        "TeacherImageUrl":""
+
 
                      
                       };
@@ -539,9 +728,13 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
 
-                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState(()async{
+                    await docUser.doc(widget.TeacherEmail).update(jsonData).then((value) =>  setState(()async{
 
-                           await credential.user?.sendEmailVerification();
+
+
+                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllTeachers(indexNumber: "")));
+
+                    
 
 
                        final snackBar = SnackBar(
@@ -550,9 +743,9 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.transparent,
                     content: AwesomeSnackbarContent(
-                      title: 'Registration Successfull',
+                      title: 'Update Successfull',
                       message:
-                          'Registration Successfull',
+                          'Update Successfull',
         
                       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                       contentType: ContentType.success,
@@ -564,18 +757,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
                     ..showSnackBar(snackBar);
 
 
-                    
-
-
-
-                   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => NewEmailNotVerified(AdminEmail: myEmailController.text.trim().toLowerCase())),
-                );
-
-
-
-
+      
                 
                 
                 setState(() {
@@ -659,7 +841,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
                       
-                        }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                        }, child: Text("Edit", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),
@@ -680,7 +862,7 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
 
 
                       ],
-                    ):Text("")
+                    )
             
             
             
@@ -693,6 +875,58 @@ class _TeacherRegistrationState extends State<TeacherRegistration> {
       
     );
   }
+
+
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Gallery'),
+                      onTap: () {
+                        imgFromGallery(context);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      imgFromCamera(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 

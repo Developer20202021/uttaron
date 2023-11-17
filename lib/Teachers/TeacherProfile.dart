@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:uttaron/AllStudent/CourseFeeHistory.dart';
 import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
+import 'package:uttaron/Teachers/EditTeacher.dart';
 
  
 
@@ -467,19 +468,6 @@ Future<void> getData(String TeacherEmail) async {
                                 ]),
 
 
-                                
-
-
-                         
-                          
-      
-      
-                   
-      
-                      
-      
-                         
-                    
                        
                         ],
                       ),
@@ -488,25 +476,6 @@ Future<void> getData(String TeacherEmail) async {
                     SizedBox(height: 15,),
 
 
-
-
-       
-
-
-
-
-      
-      
-      
-      
-      
-      
-      
-      
-
-
-
-                      
 
       
                       Row(
@@ -518,12 +487,7 @@ Future<void> getData(String TeacherEmail) async {
       
       
                                   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ExamFeeHistory(TeacherEmail: widget.TeacherEmail)));
-      
-      
-                           
-      
-      
-      
+
       
       
                           }, child: Text("Salary History", style: TextStyle(color: Colors.white),), style: ButtonStyle(
@@ -535,30 +499,11 @@ Future<void> getData(String TeacherEmail) async {
 
 
 
-                
-                
-
-
-
-
-
-
                         ],
                       ),
       
       
-                 
-      
-      
-      
-      
-                     
-      
-      
-      
-              
-              
-              
+
               
               
                     ],
@@ -573,10 +518,10 @@ Future<void> getData(String TeacherEmail) async {
 
 
 
-          // Navigator.push(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => EditPreviousCustomer(TeacherEmail: AllData[0]["TeacherEmail"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
-          //             );
+          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditTeacher(TeacherEmail: AllData[0]["TeacherEmail"], DepartmentName: AllData[0]["Department"], SubjectName: AllData[0]["SubjectName"], TeacherAddress: AllData[0]["TeacherAddress"], TeacherName: AllData[0]["TeacherName"], TeacherPhoneNumber: AllData[0]["TeacherPhoneNumber"])),
+                      );
 
 
 
