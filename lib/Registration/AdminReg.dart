@@ -11,6 +11,7 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
 import 'package:uttaron/Registration/AdminImageUpload.dart';
+import 'package:uttaron/Registration/EmailNotVerified.dart';
 
 class AdminRegistration extends StatefulWidget {
   const AdminRegistration({super.key});
@@ -25,12 +26,16 @@ class _AdminRegistrationState extends State<AdminRegistration> {
   TextEditingController myAddressController = TextEditingController();
   TextEditingController myPhoneNumberController = TextEditingController();
   TextEditingController myAdminNameController = TextEditingController();
+  TextEditingController RegCodeController = TextEditingController();
 
  var createUserErrorCode = "";
 
  bool loading = false;
 
 
+  String errorTxt = "";
+
+  String RegCode ="uttaron123";
 
 
 
@@ -102,71 +107,28 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                   children: [
 
 
-
-
-                    createUserErrorCode=="weak-password"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The password provided is too weak."),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
+                   errorTxt.isNotEmpty?  Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Container(
+             
+                         color: Colors.red.shade400,
+                         
+                         
+                         child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                         )),
+             ):Text(""),
 
 
 
 
+            
+          SizedBox(height: 15,),
 
 
 
-                    createUserErrorCode=="email-already-in-use"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The account already exists for that email.", overflow: TextOverflow.clip,),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
 
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
 
 
 
@@ -391,6 +353,50 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
 
+              
+
+
+              TextField(
+                onChanged: (value) {
+
+
+                  setState(() {
+                    RegCodeController.text = value;
+                  });
+
+                  
+                },
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Reg Code',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'Enter Reg Code',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: RegCodeController,
+                    ),
+            
+
+            SizedBox(
+                      height: 15,
+                    ),
+
+
+
 
 
 
@@ -400,7 +406,7 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
             
-                    Row(
+                   RegCode==RegCodeController.text.trim().toLowerCase()? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
@@ -468,7 +474,8 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         "registrationType":"admin",
                         "AdminPhoneNumber":myPhoneNumberController.text.trim(),
                         "AdminPassword":myPassController.text.trim(),
-                        "AdminAddress":myAddressController.text.trim()
+                        "AdminAddress":myAddressController.text.trim(),
+                        "AdminImageUrl":"https://cdn.vectorstock.com/i/preview-1x/34/96/flat-business-man-user-profile-avatar-in-suit-vector-4333496.jpg"
 
                      
                       };
@@ -508,7 +515,7 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
                    Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AdminImageUpload(AdminEmail: myEmailController.text.trim().toLowerCase())),
+                  MaterialPageRoute(builder: (context) => NewEmailNotVerified(AdminEmail: myEmailController.text.trim().toLowerCase())),
                 );
 
 
@@ -529,16 +536,31 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
 
-                    })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                              content: const Text('Something Wrong!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            )));
+                    })).onError((error, stackTrace) => setState((){
+
+                      
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Wrong',
+                      message:
+                          'Wrong',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+                    }));
 
 
 
@@ -581,21 +603,33 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
                         // print(credential.user!.email.toString());
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "weak-password";
-                          });
-                          print('The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "email-already-in-use";
-                          });
-                          print('The account already exists for that email.');
-                        }
+                        setState(() {
+
+                          errorTxt = e.code.toString();
+
+                          loading = false;
+
+                        });
+
+
+
+                        // if (e.code == 'weak-password') {
+
+                        //   setState(() {
+                        //     loading = false;
+                        //     createUserErrorCode = "weak-password";
+                        //   });
+                        //   print('The password provided is too weak.');
+                        // } else if (e.code == 'email-already-in-use') {
+
+                        //   setState(() {
+                        //     loading = false;
+                        //     createUserErrorCode = "email-already-in-use";
+                        //   });
+                        //   print('The account already exists for that email.');
+                        // }
                       } catch (e) {
                         loading = false;
                         print(e);
@@ -634,7 +668,7 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
                       ],
-                    )
+                    ):Text("")
             
             
             

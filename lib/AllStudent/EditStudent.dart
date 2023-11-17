@@ -139,7 +139,7 @@ class _EditStudentState extends State<EditStudent> {
 
 
       setState(() {
-        ImageLoading = true;
+        loading = true;
       });
 
 
@@ -185,7 +185,7 @@ class _EditStudentState extends State<EditStudent> {
   Future updateData(String AdminImageUrl,BuildContext context) async{
 
     setState(() {
-        ImageLoading = true;
+        loading = true;
       });
 
 
@@ -212,7 +212,7 @@ class _EditStudentState extends State<EditStudent> {
 
 
                       setState(() {
-                            ImageLoading = false;
+                            loading = false;
                        
                           });
 
@@ -246,7 +246,7 @@ class _EditStudentState extends State<EditStudent> {
 
                   })).onError((error, stackTrace) => setState((){
 
-                    ImageLoading = false;
+                    loading = false;
 
 
 
@@ -1149,7 +1149,7 @@ class _EditStudentState extends State<EditStudent> {
 
 
                       
-                        }, child: Text("Create Account", style: TextStyle(color: Colors.white),), style: ButtonStyle(
+                        }, child: Text("Edit", style: TextStyle(color: Colors.white),), style: ButtonStyle(
                          
                 backgroundColor: MaterialStatePropertyAll<Color>(Theme.of(context).primaryColor),
               ),),),

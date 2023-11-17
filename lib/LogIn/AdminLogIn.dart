@@ -12,6 +12,7 @@ import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
 import 'package:uttaron/LogIn/AdminNotApprove.dart';
 import 'package:uttaron/LogIn/EmailNotVerified.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
+import 'package:uttaron/Registration/EmailNotVerified.dart';
 import 'package:uttaron/Settings/ResetPassword.dart';
 
 
@@ -30,6 +31,9 @@ class _AdminLogInScreenState extends State<AdminLogInScreen> {
 
 bool _passVisibility = true;
 
+
+    String errorTxt = "";
+
    var createUserErrorCode = "";
 
    bool loading = false;
@@ -37,6 +41,27 @@ bool _passVisibility = true;
    // hive database
 
   final _mybox = Hive.box("uttaronBox");
+
+
+  Future logOut () async{
+
+
+      FirebaseAuth.instance
+                            .authStateChanges()
+                            .listen((User? user) async{
+                              if (user == null) {
+                                
+                               print('User is currently signed out!');
+                              } else {
+                                print('User is signed in!');
+                                await FirebaseAuth.instance.signOut();
+                                          
+             
+                              }
+                            });
+                  
+
+  }
 
 
 
@@ -48,6 +73,8 @@ bool _passVisibility = true;
   void initState() {
     // TODO: implement initState
     FlutterNativeSplash.remove();
+
+    
     super.initState();
   }
 
@@ -93,89 +120,32 @@ bool _passVisibility = true;
 
 
 
+
+                            
+                    
+                   errorTxt.isNotEmpty?  Center(
+                     child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                
+                           color: Colors.red.shade400,
+                           
+                           
+                           child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                           )),
+                                ),
+                   ):Text(""),
+
+
+
                       
               
               
               
               
               
-                 createUserErrorCode=="wrong-password"? Center(
-                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                
-                
-                                  child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.close, color: Colors.red,),
-                      Text("Wrong password provided for that user."),
-                    ],
-                  ),
-                                  ),
-                   
-                               decoration: BoxDecoration(
-                                color: Colors.red[100],
-                
-                                border: Border.all(
-                        width: 2,
-                        color: Colors.white
-              
-                        
-                      ),
-                                borderRadius: BorderRadius.circular(10)      
-                               ),)),
-                ):Text(""),
-              
-              
-              
-              
-              
-              
-              
-                createUserErrorCode=="user-not-found"? Center(
-                  child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                
-                
-                                  child: Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Row(
-                    children: [
-                      Icon(Icons.close, color: Colors.red,),
-                      Text("No user found for that email.", overflow: TextOverflow.clip,),
-                    ],
-                  ),
-                                  ),
-                   
-                               decoration: BoxDecoration(
-                                color: Colors.red[100],
-                
-                                border: Border.all(
-                        width: 2,
-                        color: Colors.white
-              
-                        
-                      ),
-                                borderRadius: BorderRadius.circular(10)      
-                               ),)),
-                ):Text(""),
-              
-              
-              
-              
-              
-              
-              
-              
-                
-              
-              
-              
-              
-                          
                 
                 // Center(
                 //   child: Lottie.asset(
@@ -301,6 +271,9 @@ bool _passVisibility = true;
                       setState(() {
                         loading = true;
                       });
+
+
+                      // logOut();
               
                       try {
                         final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -348,7 +321,7 @@ bool _passVisibility = true;
               
               
               
-                    if (AllData[0]["AdminApprove"] == "true") {
+                    if (AllData.isNotEmpty && AllData[0]["AdminApprove"] == "true") {
 
                         _mybox.delete("AdminPhotoUrl");
                         _mybox.delete("AdminName");
@@ -372,6 +345,10 @@ bool _passVisibility = true;
                     }
               
                     else{
+
+
+                    
+                        
               
                       setState(() {
                             loading=false;
@@ -414,20 +391,51 @@ bool _passVisibility = true;
                         else{
               
               
-                            await credential.user?.delete();
-              
-                               CollectionReference _collectionRef =
-                        FirebaseFirestore.instance.collection('Admin');
-                            _collectionRef.doc(userEmail).delete().then(
-                    (doc) => print("Document deleted"),
-                    onError: (e) => print("Error updating document $e"),
-                  );
+               try {
+
+                                await credential.user?.sendEmailVerification().then((value) => setState((){
+
+                                setState(() {
+                                 loading = false;
+                                
+                               });
+
+
+
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewEmailNotVerified(AdminEmail: userEmail)),);
+
+                                  print("Done");
+                               
+                                })).onError((error, stackTrace) => setState((){
+
+
+                                setState(() {
+                                 loading = false;
+                             
+                               });
+
+
+
+
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => NewEmailNotVerified(AdminEmail: userEmail)),);
+
+
+
+                          
+
+                                  print("________________________$error");
+                                }));
+                                
+                              } catch (e) {
+                                print(e);
+                                
+                              }
               
                               setState(() {
                             loading=false;
                           });
                           
-                             Navigator.push(context, MaterialPageRoute(builder: (context) => EmailNotVerified()),);
+                          
               
               
                         }
@@ -448,24 +456,42 @@ bool _passVisibility = true;
               
               
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'user-not-found') {
+
+                        print("________________________${e.code}");
+
+
+                        setState(() {
+                          errorTxt = e.code.toString();
+
+                          loading = false;
+                        });
+
+
+
+
+
+
+
+
+
+                        // if (e.code == 'user-not-found') {
               
-                          setState(() {
-                            loading=false;
-                            createUserErrorCode = "user-not-found";
+                        //   setState(() {
+                        //     loading=false;
+                        //     createUserErrorCode = "user-not-found";
                             
-                          });
-                          print('No user found for that email.');
-                        } else if (e.code == 'wrong-password') {
+                        //   });
+                        //   print('No user found for that email.');
+                        // } else if (e.code == 'wrong-password') {
               
               
-                          setState(() {
-                            loading=false;
-                            createUserErrorCode = "wrong-password";
+                        //   setState(() {
+                        //     loading=false;
+                        //     createUserErrorCode = "wrong-password";
                             
-                          });
-                          print('Wrong password provided for that user.');
-                        }
+                        //   });
+                        //   print('Wrong password provided for that user.');
+                        // }
                       }
               
               

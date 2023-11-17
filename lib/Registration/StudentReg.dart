@@ -37,6 +37,12 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   TextEditingController FatherPhoneNoController = TextEditingController();
   TextEditingController CourseFeeController = TextEditingController();
   TextEditingController IDNoController = TextEditingController();
+  TextEditingController RegCodeController = TextEditingController();
+
+
+    String errorTxt = "";
+
+  String RegCode ="uttaron123";
 
 
 
@@ -132,84 +138,30 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-                    createUserErrorCode=="weak-password"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
                     
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The password provided is too weak."),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
-
-
-
-
-
-
-
-                    createUserErrorCode=="email-already-in-use"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The account already exists for that email.", overflow: TextOverflow.clip,),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
-
-
-
-
-
-
-
-
-                    
+                   errorTxt.isNotEmpty?  Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: Container(
+             
+                         color: Colors.red.shade400,
+                         
+                         
+                         child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("${errorTxt}", style: TextStyle(color: Colors.white),),
+                         )),
+             ):Text(""),
 
 
 
 
             
-                    
+          SizedBox(height: 15,),
+
+
+
+
+                  
                     // Center(
                     //   child: Lottie.asset(
                     //   'lib/images/animation_lk8g4ixk.json',
@@ -941,8 +893,46 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-                    SizedBox(height: 11,),
+       
 
+              TextField(
+                onChanged: (value) {
+
+
+                  setState(() {
+                    RegCodeController.text = value;
+                  });
+
+                  
+                },
+                      
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Reg Code',
+                           labelStyle: TextStyle(
+              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
+                  ),
+                          hintText: 'Enter Reg Code',
+                          //  enabledBorder: OutlineInputBorder(
+                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
+                          //   ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
+                            ),
+                          
+                          
+                          ),
+                      controller: RegCodeController,
+                    ),
+            
+
+            SizedBox(
+                      height: 15,
+                    ),
 
 
 
@@ -974,7 +964,7 @@ var code = Random().nextInt(900000) + 100000;
 
 
             
-                    Row(
+                    RegCode==RegCodeController.text.trim().toLowerCase()?Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
@@ -1144,16 +1134,35 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-                    })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                              content: const Text('Something Wrong!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            )));
+                    })).onError((error, stackTrace) => setState((){
+
+                      setState(() {
+                    loading = false;
+                  });
+
+
+                        final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Registration Successfull',
+                      message:
+                          'Registration Successfull',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+                    }));
 
 
 
@@ -1167,23 +1176,40 @@ var code = Random().nextInt(900000) + 100000;
 
                         // print(credential.user!.email.toString());
                       } on FirebaseAuthException catch (e) {
-                        if (e.code == 'weak-password') {
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "weak-password";
-                          });
-                          print('The password provided is too weak.');
-                        } else if (e.code == 'email-already-in-use') {
 
-                          setState(() {
-                            loading = false;
-                            createUserErrorCode = "email-already-in-use";
-                          });
-                          print('The account already exists for that email.');
-                        }
+                  setState(() {
+                    loading = false;
+                  });
+
+                        setState(() {
+
+                          errorTxt = e.code.toString();
+                          
+                        });
+
+
+
+
+                        // if (e.code == 'weak-password') {
+
+                        //   setState(() {
+                        //     loading = false;
+                        //     createUserErrorCode = "weak-password";
+                        //   });
+                        //   print('The password provided is too weak.');
+                        // } else if (e.code == 'email-already-in-use') {
+
+                        //   setState(() {
+                        //     loading = false;
+                        //     createUserErrorCode = "email-already-in-use";
+                        //   });
+                        //   print('The account already exists for that email.');
+                        // }
                       } catch (e) {
-                        loading = false;
+                  setState(() {
+                    loading = false;
+                  });
                         print(e);
                       }
 
@@ -1220,7 +1246,7 @@ var code = Random().nextInt(900000) + 100000;
 
 
                       ],
-                    )
+                    ):Text("")
             
             
             
