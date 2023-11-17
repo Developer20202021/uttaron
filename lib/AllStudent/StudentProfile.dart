@@ -8,6 +8,7 @@ import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/CourseFeeHistory.dart';
+import 'package:uttaron/AllStudent/EditStudent.dart';
 import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 
@@ -851,10 +852,10 @@ Future<void> getSaleData() async {
 
 
 
-          // Navigator.push(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => EditPreviousCustomer(StudentEmail: AllData[0]["StudentEmail"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
-          //             );
+          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditStudent(Category: AllData[0]["Category"], Department: AllData[0]["Department"], FatherName:AllData[0]["FatherName"] , FatherPhoneNo: AllData[0]["FatherPhoneNo"], MotherName:AllData[0]["MotherName"], Semister:AllData[0]["Semister"], StudentAddress: AllData[0]["StudentAddress"], StudentBirthCertificateNo: AllData[0]["StudentBirthCertificateNo"], StudentDateOfBirth: AllData[0]["StudentDateOfBirth"], StudentNID: AllData[0]["StudentNID"], StudentName: AllData[0]["StudentName"], StudentEmail: AllData[0]["StudentEmail"])),
+                      );
 
 
 

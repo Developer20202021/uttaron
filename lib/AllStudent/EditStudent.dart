@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
-
+import 'dart:io';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,26 +8,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
+import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
 import 'package:uttaron/Registration/OtpPage.dart';
 import 'package:uttaron/Registration/StudentImageUpload.dart';
+import 'package:path/path.dart';
 
-class StudentRegistration extends StatefulWidget {
-  const StudentRegistration({super.key});
+
+
+
+class EditStudent extends StatefulWidget {
+
+
+    final StudentName;
+    final StudentAddress;
+    final StudentDateOfBirth;
+    final StudentBirthCertificateNo;
+    final StudentNID;
+    final FatherName;
+    final MotherName;
+    final FatherPhoneNo;
+    final Department;
+    final Semister;
+    final Category;
+    final StudentEmail;
+
+
+
+  const EditStudent({super.key,required this.Category, required this.Department, required this.FatherName, required this.FatherPhoneNo, required this.MotherName, required this.Semister, required this.StudentAddress,required this.StudentBirthCertificateNo, required this.StudentDateOfBirth,required this.StudentNID, required this.StudentName, required this.StudentEmail});
 
   @override
-  State<StudentRegistration> createState() => _StudentRegistrationState();
+  State<EditStudent> createState() => _EditStudentState();
 }
 
-class _StudentRegistrationState extends State<StudentRegistration> {
-  TextEditingController myEmailController = TextEditingController();
-  TextEditingController myPassController = TextEditingController();
+class _EditStudentState extends State<EditStudent> {
   TextEditingController myAddressController = TextEditingController();
-  TextEditingController myPhoneNumberController = TextEditingController();
   TextEditingController myAdminNameController = TextEditingController();
   TextEditingController MotherNameController = TextEditingController();
   TextEditingController FatherNameController = TextEditingController();
@@ -35,10 +55,11 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   TextEditingController BirthCertificateNoController = TextEditingController();
   TextEditingController NIDController = TextEditingController();
   TextEditingController FatherPhoneNoController = TextEditingController();
-  TextEditingController CourseFeeController = TextEditingController();
-  TextEditingController IDNoController = TextEditingController();
 
 
+  File? _photo;
+
+  String image64 = "";
 
   String SelectedValue = ""; 
 
@@ -53,12 +74,257 @@ class _StudentRegistrationState extends State<StudentRegistration> {
 
  bool loading = false;
 
+ bool ImageLoading = false;
 
 
 
-var rng = new Random();
-var code = Random().nextInt(900000) + 100000;
 
+ 
+
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+
+        final bytes = File(pickedFile.path).readAsBytesSync();
+
+        setState(() {
+          image64 = base64Encode(bytes);
+        });
+
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+
+  
+  Future imgFromCamera(BuildContext context) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (pickedFile != null) {
+        _photo = File(pickedFile.path);
+        uploadFile(context);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+
+
+
+
+  
+  Future uploadFile(BuildContext context) async {
+    if (_photo == null) return;
+    
+    final fileName = basename(_photo!.path);
+    final destination = 'files/$fileName';
+
+    print(_photo!.path);
+
+    try {
+
+
+      setState(() {
+        ImageLoading = true;
+      });
+
+
+
+   var request = await http.post(Uri.parse("https://api.imgbb.com/1/upload?key=9a7a4a69d9a602061819c9ee2740be89"),  body: {
+          'image':'$image64',
+        } ).then((value) => setState(() {
+
+
+          print(jsonDecode(value.body));
+
+
+
+          var serverData = jsonDecode(value.body);
+
+          var serverImageUrl = serverData["data"]["url"];
+
+          print(serverImageUrl);
+
+          updateData(serverImageUrl,context);
+
+
+
+
+
+
+        })).onError((error, stackTrace) => print(error));
+
+
+
+
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
+
+
+  
+  Future updateData(String AdminImageUrl,BuildContext context) async{
+
+    setState(() {
+        ImageLoading = true;
+      });
+
+
+
+      print("__________________________________________________________${widget.StudentEmail}");
+
+
+         final docUser = FirebaseFirestore.instance.collection("StudentInfo").doc(widget.StudentEmail);
+
+                  final UpadateData ={
+
+                    "StudentImageUrl":AdminImageUrl
+
+                
+                };
+
+
+
+
+
+                // user Data Update and show snackbar
+
+                  docUser.update(UpadateData).then((value) => setState((){
+
+
+                      setState(() {
+                            ImageLoading = false;
+                       
+                          });
+
+
+                    print("Done");
+
+
+
+
+                
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Your Image Upload Successfull',
+                      message:
+                          'Your Image Upload Successfull',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.success,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+                  })).onError((error, stackTrace) => setState((){
+
+                    ImageLoading = false;
+
+
+
+
+                    
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Image Upload Failed',
+                      message:
+                          'Image Upload Failed',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+
+
+
+
+
+                    print(error);
+
+                  }));
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  void ValueChange (){
+
+
+    setState(() {
+
+
+      SelectedCategory = widget.Category;
+      SelectedSemisterValue = widget.Semister;
+      SelectedValue = widget.Department;
+      
+
+
+
+    });
+
+
+
+
+
+  }
 
 
 
@@ -73,7 +339,7 @@ var code = Random().nextInt(900000) + 100000;
     super.initState();
     // FlutterNativeSplash.remove();
 
-    print(code);
+  ValueChange ();
     
   }
 
@@ -82,6 +348,17 @@ var code = Random().nextInt(900000) + 100000;
   Widget build(BuildContext context) {
 
     FocusNode myFocusNode = new FocusNode();
+
+
+    myAddressController.text = widget.StudentAddress;
+    myAdminNameController.text = widget.StudentName;
+    MotherNameController.text = widget.MotherName;
+    FatherNameController.text = widget.FatherName;
+    FatherPhoneNoController.text = widget.FatherPhoneNo;
+    NIDController.text = widget.StudentNID;
+    DateOfBirthController.text = widget.StudentDateOfBirth;
+    BirthCertificateNoController.text = widget.StudentBirthCertificateNo;
+
 
 
 
@@ -104,7 +381,7 @@ var code = Random().nextInt(900000) + 100000;
       appBar: AppBar(
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
-        title: const Text("Student Registration", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+        title: const Text("Edit Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
         backgroundColor: Colors.transparent,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -131,100 +408,45 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-
-                    createUserErrorCode=="weak-password"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
                     
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The password provided is too weak."),
-                        ],
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                _showPicker(context);
+              },
+              child: CircleAvatar(
+                radius: 100,
+                backgroundColor: Theme.of(context).primaryColor,
+                child: _photo != null
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: Image.file(
+                          _photo!,
+                          width: 200,
+                          height: 200,
+                          fit: BoxFit.fitHeight,
+                        ),
+                      )
+                    : Container(
+                        decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(5)),
+                        width: 200,
+                        height: 200,
+                        child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.grey[800],
+                        ),
                       ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
+              ),
+            ),
+          ),
 
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
+          SizedBox(height: 75,),
 
 
 
 
-
-
-
-                    createUserErrorCode=="email-already-in-use"? Center(
-                      child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                    
-                    
-                                      child: Padding(
-                      padding: const EdgeInsets.only(top: 8, bottom: 8),
-                      child: Row(
-                        children: [
-                          Icon(Icons.close, color: Colors.red,),
-                          Text("The account already exists for that email.", overflow: TextOverflow.clip,),
-                        ],
-                      ),
-                                      ),
-                       
-                                   decoration: BoxDecoration(
-                                    color: Colors.red[100],
-                    
-                                    border: Border.all(
-                            width: 2,
-                            color: Colors.white
-
-                            
-                          ),
-                                    borderRadius: BorderRadius.circular(10)      
-                                   ),)),
-                    ):Text(""),
-
-
-
-
-
-
-
-
-                    
-
-
-
-
-            
-                    
-                    // Center(
-                    //   child: Lottie.asset(
-                    //   'lib/images/animation_lk8g4ixk.json',
-                    //     fit: BoxFit.cover,
-                    //     width: 300,
-                    //     height: 200
-                    //   ),
-                    // ),
-            
-            // SizedBox(
-            //           height: 20,
-            //         ),
-            
-            
-            
                     TextField(
                       
                       decoration: InputDecoration(
@@ -259,42 +481,6 @@ var code = Random().nextInt(900000) + 100000;
             
             
             
-                   
-                    SizedBox(
-                      height: 15,
-                    ),
-
-
-
-            
-            
-            
-                    TextField(
-                      keyboardType: TextInputType.phone,
-                      focusNode: myFocusNode,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Phone Number',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Enter Your Phone Number',
-            
-                          //  enabledBorder: OutlineInputBorder(
-                          //       borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //     ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                              ),
-                          
-                          
-                          ),
-                      controller: myPhoneNumberController,
-                    ),
             
             
             
@@ -307,34 +493,6 @@ var code = Random().nextInt(900000) + 100000;
             
             
             
-                    TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Email',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Colors.purple: Colors.black
-                  ),
-                          hintText: 'Enter Your Email',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myEmailController,
-                    ),
-            
-                    SizedBox(
-                      height: 15,
-                    ),
 
 
 
@@ -375,58 +533,6 @@ var code = Random().nextInt(900000) + 100000;
                     SizedBox(
                       height: 15,
                     ),
-
-
-
-
-           
-
-
-
-
-
-
-
-                    TextField(
-                      
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter Password',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Enter Your Password',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: myPassController,
-                    ),
-
-
-
-
-
-
-                         SizedBox(
-                      height: 15,
-                    ),
-
-
-
-
-           
-
-
 
 
 
@@ -696,105 +802,6 @@ var code = Random().nextInt(900000) + 100000;
            
 
 
-
-
-
-
-
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Course Fee',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'Course Fee',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: CourseFeeController,
-                    ),
-
-
-
-
-
-
-                           SizedBox(
-                      height: 15,
-                    ),
-
-
-
-
-           
-
-
-
-
-
-
-
-                    TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'ID No',
-                           labelStyle: TextStyle(
-              color: myFocusNode.hasFocus ? Theme.of(context).primaryColor: Colors.black
-                  ),
-                          hintText: 'ID No',
-                          //  enabledBorder: OutlineInputBorder(
-                          //     borderSide: BorderSide(width: 3, color: Colors.greenAccent),
-                          //   ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(width: 3, color: Theme.of(context).primaryColor),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  width: 3, color: Color.fromARGB(255, 66, 125, 145)),
-                            ),
-                          
-                          
-                          ),
-                      controller: IDNoController,
-                    ),
-
-
-
-
-
-                    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                       SizedBox(height: 11,),
 
 
@@ -991,109 +998,33 @@ var code = Random().nextInt(900000) + 100000;
 
 
                       try {
-                        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                          email: myEmailController.text.trim(),
-                          password: myPassController.text.trim(),
-                        );
-
-
-                        
-
-                      
-
-
-
-                       
-                        await credential.user?.updateDisplayName(myAdminNameController.text.trim().toLowerCase());
-
                        
 
-
-                        // await credential.user?.updatePhoneNumber(myPhoneNumberController.text.trim() as PhoneAuthCredential);
-                        
-
-
-                     
-                      
-                        // await credential.user?.sendEmailVerification();
-
-
-
-
-
-
-                  // var AdminMsg = "Dear Admin, ${myEmailController.text.trim()}  ${myPhoneNumberController.text} Admin হতে চায়। Please Check App";
-
-
-
-                  // final response = await http
-                  //     .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=01713773514&message=${AdminMsg}'));
-
-                  // if (response.statusCode == 200) {
-                    // If the server did return a 200 OK response,
-                    // then parse the JSON.
                      final docUser =  FirebaseFirestore.instance.collection("StudentInfo");
 
                       final jsonData ={
 
                         "StudentName":myAdminNameController.text.trim().toLowerCase(),
-                        "StudentEmail":myEmailController.text.trim().toLowerCase(),
-                        "emailVerified":"",
-                        "AdminApprove":"false",
-                        "registrationType":"student",
-                        "StudentPhoneNumber":myPhoneNumberController.text.trim(),
-                        "StudentPassword":myPassController.text.trim(),
+
                         "StudentAddress":myAddressController.text.trim(),
                         "StudentDateOfBirth":DateOfBirthController.text.trim(),
                         "StudentBirthCertificateNo":BirthCertificateNoController.text.trim(),
                         "StudentNID":NIDController.text.trim(),
-                        "CourseFee":CourseFeeController.text.trim(),
-                        "DueAmount":CourseFeeController.text.trim(),
                         "FatherName":FatherNameController.text.trim().toLowerCase(),
                         "MotherName":MotherNameController.text.trim().toLowerCase(),
                         "FatherPhoneNo":FatherPhoneNoController.text.trim(),
                         "Department":SelectedValue.toString().toLowerCase(),
                         "Semister":SelectedSemisterValue.toString().toLowerCase(),
-                        "StudentType":"Due",
-                        "IDNo":IDNoController.text.trim(),
-                        "AdmissionDateTime":"${DateTime.now().toIso8601String()}",
-                        "AdmissionDate":"${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}",
-                        "AdmissionMonth":"${DateTime.now().month}/${DateTime.now().year}",
-                        "AdmissionYear":"${DateTime.now().year}",
-                        "StudentStatus":"new",
                         "Category":SelectedCategory,
-                        "LastAttendance":"",
-                        "AccountStatus":"open",
-                        "OtpCode":code.toString(),
-                        "PhoneVerify":"false",
-                        "StudentImageUrl":"https://t4.ftcdn.net/jpg/00/65/77/27/360_F_65772719_A1UV5kLi5nCEWI0BNLLiFaBPEkUbv5Fv.jpg"
-
-                     
                       };
 
 
 
 
-                    await docUser.doc(myEmailController.text.trim().toLowerCase()).set(jsonData).then((value) =>  setState(() async{
+                    await docUser.doc(widget.StudentEmail).update(jsonData).then((value) =>  setState(() async{
 
 
 
-                  var OtpMsg ="Your OTP ${code} Uttaron. InanSoft";
-
-                  final response = await http
-                      .get(Uri.parse('https://api.greenweb.com.bd/api.php?token=100651104321696050272e74e099c1bc81798bc3aa4ed57a8d030&to=${myPhoneNumberController.text.trim()}&message=${OtpMsg}'));
-
-                  if (response.statusCode == 200) {
-                    // If the server did return a 200 OK response,
-                    // then parse the JSON.
-
-                    print("");
-                    
-                  } else {
-                    // If the server did not return a 200 OK response,
-                    // then throw an exception.
-                    throw Exception('Failed to load album');
-                  }
 
 
 
@@ -1103,9 +1034,9 @@ var code = Random().nextInt(900000) + 100000;
                     behavior: SnackBarBehavior.floating,
                     backgroundColor: Colors.transparent,
                     content: AwesomeSnackbarContent(
-                      title: 'Registration Successfull',
+                      title: 'Edit Successfull',
                       message:
-                          'Registration Successfull',
+                          'Edit Successfull',
         
                       /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
                       contentType: ContentType.success,
@@ -1123,7 +1054,7 @@ var code = Random().nextInt(900000) + 100000;
 
                    Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OtpPage(StudentPhoneNumber: myPhoneNumberController.text.trim(), StudentEmail: myEmailController.text.trim())),
+                  MaterialPageRoute(builder: (context) => AllDepartment()),
                 );
 
 
@@ -1144,16 +1075,35 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-                    })).onError((error, stackTrace) => ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    backgroundColor: Colors.red,
-                              content: const Text('Something Wrong!'),
-                              action: SnackBarAction(
-                                label: 'Undo',
-                                onPressed: () {
-                                  // Some code to undo the change.
-                                },
-                              ),
-                            )));
+                    })).onError((error, stackTrace) => setState((){
+
+
+
+                      
+                       final snackBar = SnackBar(
+                    /// need to set following properties for best effect of awesome_snackbar_content
+                    elevation: 0,
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.transparent,
+                    content: AwesomeSnackbarContent(
+                      title: 'Something Wrong',
+                      message:
+                          'Something Wrong',
+        
+                      /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                      contentType: ContentType.failure,
+                    ),
+                  );
+        
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(snackBar);
+
+
+
+
+
+                    }));
 
 
 
@@ -1233,6 +1183,54 @@ var code = Random().nextInt(900000) + 100000;
       
     );
   }
+
+
+
+
+
+
+
+  
+  void _showPicker(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.photo_library),
+                      title: new Text('Gallery'),
+                      onTap: () {
+                        imgFromGallery(context);
+                        Navigator.of(context).pop();
+                      }),
+                  new ListTile(
+                    leading: new Icon(Icons.photo_camera),
+                    title: new Text('Camera'),
+                    onTap: () {
+                      imgFromCamera(context);
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+
+
+
+
+
+
+
+
+
+
 }
 
 
