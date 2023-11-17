@@ -5,6 +5,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -31,13 +32,13 @@ class EditAdmin extends StatefulWidget {
   final AdminAddress;
   final AdminPhoneNumber;
   final AdminName;
-  final SubjectName;
-  final DepartmentName;
 
 
 
 
-  const EditAdmin({super.key, required this.AdminEmail, required this.DepartmentName, required this.SubjectName, required this.AdminAddress,required this.AdminName, required this.AdminPhoneNumber});
+
+
+  const EditAdmin({super.key, required this.AdminEmail,  required this.AdminAddress,required this.AdminName, required this.AdminPhoneNumber});
 
   @override
   State<EditAdmin> createState() => _EditAdminState();
@@ -183,7 +184,7 @@ class _EditAdminState extends State<EditAdmin> {
       print("__________________________________________________________${widget.AdminEmail}");
 
 
-         final docUser = FirebaseFirestore.instance.collection("AdminInfo").doc(widget.AdminEmail);
+         final docUser = FirebaseFirestore.instance.collection("Admin").doc(widget.AdminEmail);
 
                   final UpadateData ={
 
@@ -279,62 +280,13 @@ class _EditAdminState extends State<EditAdmin> {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  void setDepartment(){
-
-    setState(() {
-      SelectedValue = widget.DepartmentName;
-    });
-
-
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
-
-
   
   @override
   void initState() {
   
     super.initState();
     // FlutterNativeSplash.remove();
-    setDepartment();
+
     
   }
 
@@ -347,7 +299,6 @@ class _EditAdminState extends State<EditAdmin> {
     myAddressController.text = widget.AdminAddress;
     myAdminNameController.text = widget.AdminName;
     myPhoneNumberController.text = widget.AdminPhoneNumber;
-    SubjectController.text = widget.SubjectName;
     myPhoneNumberController.text = widget.AdminPhoneNumber;
 
 
@@ -371,6 +322,13 @@ class _EditAdminState extends State<EditAdmin> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+    
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Admin Registration", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),

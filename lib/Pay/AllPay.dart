@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:uttaron/AllStudent/AllSemister.dart';
@@ -54,6 +55,11 @@ class _AllPayState extends State<AllPay> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
        
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),

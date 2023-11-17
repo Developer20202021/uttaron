@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -274,6 +275,14 @@ Future<void> getAbsenceData(String TeacherEmail) async {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+
+    
+    
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         centerTitle: true,
         iconTheme: IconThemeData(color: ColorName().appColor),
         leading: IconButton(

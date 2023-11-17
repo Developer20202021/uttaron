@@ -4,6 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
@@ -14,6 +15,7 @@ import 'package:uttaron/AllStudent/ShowAttendance.dart';
 import 'package:uttaron/AllStudent/StudentProfile.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Notice/NoticeImageView.dart';
+import 'package:uttaron/Notifications/notifi_service.dart';
 import 'package:uttaron/Pay/AllPay.dart';
 import 'package:uttaron/Teachers/ShowAttendance.dart';
 import 'package:uttaron/Teachers/TeacherProfile.dart';
@@ -108,6 +110,96 @@ Future<void> getData() async {
 
 
 
+Future ShowNotification(String notificationBody, String title) async{
+
+
+
+      NotificationService().showNotification(title: title, body: notificationBody, payLoad: "12312341");
+
+
+
+}
+
+
+
+
+
+
+
+
+List NewNotice =[];
+
+
+
+Future<void> getNewNotice() async {
+    // Get docs from collection reference
+    // QuerySnapshot querySnapshot = await _collectionRef.get();
+          setState(() {
+                loading= true;
+              });
+
+      
+      
+  CollectionReference _collectionRef =
+    FirebaseFirestore.instance.collection('Notice');
+
+    Query query = _collectionRef.where("Date", isEqualTo: "${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}");
+    QuerySnapshot querySnapshot = await query.get();
+
+    // Get data from docs and convert map to List
+     NewNotice = querySnapshot.docs.map((doc) => doc.data()).toList();
+     
+     
+
+
+
+     if (NewNotice.isEmpty) {
+
+    setState(() {
+    
+
+      loading = false;
+     });
+
+
+
+       
+     } else {
+
+
+    
+
+
+
+    setState(() {
+       NewNotice = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+      loading = false;
+     });
+
+
+     ShowNotification(NewNotice[0]["Description"], NewNotice[0]["Title"]);
+
+    
+     }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Firebase All Customer Data Load
@@ -119,8 +211,14 @@ Future<void> getData() async {
 
 
 
+
+
+
 @override
   void initState() {
+
+
+    getNewNotice();
     // TODO: implement initState
     setState(() {
       loading = true;
@@ -282,6 +380,11 @@ Future<void> getData() async {
 
       backgroundColor: Colors.white,
       appBar: AppBar(
+
+        systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
         iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("All Notice",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

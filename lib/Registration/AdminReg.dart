@@ -4,12 +4,14 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
 import 'package:http/http.dart' as http;
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Registration/AdminImageUpload.dart';
 import 'package:uttaron/Registration/EmailNotVerified.dart';
 
@@ -79,6 +81,13 @@ class _AdminRegistrationState extends State<AdminRegistration> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+    
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Admin Registration", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -340,6 +341,12 @@ class _NoticeImageUploadState extends State<NoticeImageUpload> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+
+          systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
         actions: [
 
 

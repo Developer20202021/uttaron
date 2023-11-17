@@ -5,6 +5,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -12,6 +13,7 @@ import 'package:http/http.dart' as http;
 import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Pay/CourseFeeInvoice.dart';
 import 'package:uuid/uuid.dart';
@@ -412,6 +414,14 @@ class _CourseFeeState extends State<CourseFee> {
       ),
       
       appBar: AppBar(
+
+
+  
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Color.fromRGBO(92, 107, 192, 1)),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Course Fee",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

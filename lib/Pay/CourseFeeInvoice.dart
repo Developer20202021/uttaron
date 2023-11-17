@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 
 
 
@@ -43,6 +44,13 @@ class _PdfPreviewPageState extends State<PdfPreviewPage> {
        backgroundColor: Colors.white,
       
       appBar: AppBar(
+      
+      
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Invoice", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

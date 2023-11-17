@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:uttaron/AdminDashBoard/MonthlyCourseFeeCollection.dart';
+import 'package:uttaron/Admins/EditAdmin.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/CourseFeeHistory.dart';
 import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 
  
@@ -249,6 +252,15 @@ Future<void> getData(String AdminEmail) async {
       
       
       appBar: AppBar(
+
+    
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
+
+      
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Admin Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),
@@ -442,10 +454,10 @@ Future<void> getData(String AdminEmail) async {
 
 
 
-          // Navigator.push(
-          //               context,
-          //               MaterialPageRoute(builder: (context) => EditPreviousCustomer(AdminEmail: AllData[0]["AdminEmail"] , CustomerAddress:  AllData[0]["CustomerAddress"], CustomerName: AllData[0]["CustomerName"] , CustomerPhoneNumber: AllData[0]["CustomerPhoneNumber"]  , CustomerEmail: AllData[0]["CustomerEmail"] , CustomerFatherName: AllData[0]["CustomerFatherName"] , CustomerMotherName:  AllData[0]["CustomerMotherName"], CustomerGuarantor1Name:  AllData[0]["CustomerGuarantor1Name"], CustomerGuarantor1PhoneNumber:  AllData[0]["CustomerGuarantor1PhoneNumber"], CustomerGuarantor1Address:  AllData[0]["CustomerGuarantor1Address"], CustomerGuarantor2Name:  AllData[0]["CustomerGuarantor2Name"], CustomerGuarantor2PhoneNumber:  AllData[0]["CustomerGuarantor2PhoneNumber"], CustomerGuarantor2NID:  AllData[0]["CustomerGuarantor2NID"], CustomerGuarantor2Address: AllData[0]["CustomerGuarantor2Address"] , CustomerGuarantor1NID: AllData[0]["CustomerGuarantor1NID"])),
-          //             );
+          Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => EditAdmin(AdminEmail: AllData[0]["AdminEmail"], AdminAddress: AllData[0]["AdminAddress"], AdminName: AllData[0]["AdminName"], AdminPhoneNumber:AllData[0]["AdminPhoneNumber"])),
+                      );
 
 
 

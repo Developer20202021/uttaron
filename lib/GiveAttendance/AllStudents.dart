@@ -4,6 +4,7 @@ import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:path/path.dart';
@@ -381,6 +382,12 @@ Future<void> getSearchData(String StudentIDNo) async {
 
       backgroundColor: Colors.white,
         appBar:  AppBar(
+
+      
+      systemOverlayStyle: SystemUiOverlayStyle(
+          // Navigation bar
+          statusBarColor: ColorName().appColor, // Status bar
+        ),
 
         toolbarHeight: searchField=="search"?100:56,
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),

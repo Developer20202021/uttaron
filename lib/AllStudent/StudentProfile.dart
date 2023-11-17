@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:uttaron/AdminDashBoard/AdminDashboard.dart';
@@ -10,6 +11,7 @@ import 'package:uttaron/AllStudent/AllDepartment.dart';
 import 'package:uttaron/AllStudent/CourseFeeHistory.dart';
 import 'package:uttaron/AllStudent/EditStudent.dart';
 import 'package:uttaron/AllStudent/ExamFeeHistory.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 
  
@@ -299,6 +301,13 @@ Future<void> getSaleData() async {
       
       
       appBar: AppBar(
+
+      
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Student Profile", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

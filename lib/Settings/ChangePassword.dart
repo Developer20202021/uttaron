@@ -7,6 +7,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:lottie/lottie.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/LogIn/AdminLogIn.dart';
 
 
@@ -113,6 +114,13 @@ class _ChangePasswordState extends State<ChangePassword> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+    
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         leading: IconButton(onPressed: () => Navigator.of(context).pop(), icon: Icon(Icons.chevron_left)),
         title: const Text("Change Password",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

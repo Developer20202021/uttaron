@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
@@ -15,14 +16,21 @@ import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/LogIn/AdminLogIn.dart';
 import 'package:uttaron/Notice/AllNotice.dart';
 import 'package:uttaron/Notice/NoticeUpload.dart';
+import 'package:uttaron/Notifications/notifi_service.dart';
 import 'package:uttaron/Pay/CourseFeeInvoice.dart';
 import 'package:uttaron/Registration/AllRegistration.dart';
 import 'package:uttaron/Registration/StudentReg.dart';
 import 'package:uttaron/Teachers/AllTeachers.dart';
 import 'package:uttaron/Teachers/GiveAttendanceTeacher.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+
 
 
 void main() async{
+
+
+
 
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +39,10 @@ void main() async{
     options: FirebaseOptions(apiKey: "AIzaSyCtca9qgQyElzVEMbjUkUrzYsE94fmhhN8", appId: "1:145894825045:android:f8792d3a131fca15aa88dc", messagingSenderId: "145894825045", projectId: "uttaronapp")
     
   );
+
+
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
 
 
   await Future.delayed(const Duration(seconds: 3));
@@ -52,6 +64,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      
       debugShowCheckedModeBanner: false,
       title: 'Uttaron',
       theme: ThemeData(

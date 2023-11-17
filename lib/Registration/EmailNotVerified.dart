@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/LogIn/AdminLogIn.dart';
 
@@ -183,6 +184,14 @@ void dispose() {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+
+
+      
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         iconTheme: IconThemeData(color: ColorName().appColor),
         automaticallyImplyLeading: false,
         title: const Text("Verify Email",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

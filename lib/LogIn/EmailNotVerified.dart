@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 
 class EmailNotVerified extends StatefulWidget {
@@ -16,6 +17,10 @@ class _EmailNotVerifiedState extends State<EmailNotVerified> {
       backgroundColor: Colors.white,
       
       appBar: AppBar(
+    systemOverlayStyle: SystemUiOverlayStyle(
+      // Navigation bar
+      statusBarColor: ColorName().appColor, // Status bar
+    ),
         iconTheme: IconThemeData(color: ColorName().appColor),
         automaticallyImplyLeading: false,
         title: const Text("Email Not Verified",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),),

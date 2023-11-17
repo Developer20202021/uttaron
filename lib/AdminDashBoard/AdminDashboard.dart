@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive/hive.dart';
@@ -14,6 +15,7 @@ import 'package:uttaron/AdminDashBoard/SendSMSToAllStudents.dart';
 import 'package:uttaron/Admins/AdminProfile.dart';
 import 'package:uttaron/Admins/AllAdmins.dart';
 import 'package:uttaron/AllStudent/AllDepartment.dart';
+import 'package:uttaron/DeveloperAccess/DeveloperAccess.dart';
 import 'package:uttaron/DeveloperAccess/DeveloperInfo.dart';
 import 'package:uttaron/GiveAttendance/AllDepartment.dart';
 import 'package:uttaron/LogIn/AdminLogIn.dart';
@@ -367,6 +369,14 @@ var AdminEmail = "";
       
       
       appBar: AppBar(
+
+
+
+      systemOverlayStyle: SystemUiOverlayStyle(
+            // Navigation bar
+            statusBarColor: ColorName().appColor, // Status bar
+          ),
+       
         leading:Center(
                       child:  Padding(
                         padding: const EdgeInsets.all(3.0),
