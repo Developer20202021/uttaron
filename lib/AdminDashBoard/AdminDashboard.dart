@@ -381,20 +381,10 @@ var AdminEmail = "";
             statusBarColor: ColorName().appColor, // Status bar
           ),
        
-        leading:Center(
-                      child:  Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                            "${photoUrl}",
-                          ),
-                        ),
-                      ),
-                    ),
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        
+        iconTheme: IconThemeData(color: Colors.white),
        automaticallyImplyLeading: false,
-        title: const Text("Your Dashboard", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
+        title: const Text("Your Dashboard", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 16),),
         backgroundColor: ColorName().appColor,
         bottomOpacity: 0.0,
         elevation: 0.0,
@@ -463,11 +453,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.fingerprint),
+                    Icon(Icons.fingerprint, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Student Attendance"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -490,11 +480,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.person_4),
+                    Icon(Icons.person_4, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("All Students"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -517,11 +507,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.payment),
+                    Icon(Icons.payment, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Due Students"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -636,11 +626,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.account_balance),
+                    Icon(Icons.account_balance, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Monthly Course Fee"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -665,11 +655,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.admin_panel_settings),
+                    Icon(Icons.admin_panel_settings, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("All Admins"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -697,11 +687,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.account_balance),
+                    Icon(Icons.account_balance, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Exam Fee History"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -722,11 +712,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.notification_add),
+                    Icon(Icons.notification_add, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Notice Upload"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -747,11 +737,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.notifications),
+                    Icon(Icons.notifications, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("All Notice"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -779,11 +769,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.person),
+                    Icon(Icons.person, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("All Teachers"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -815,11 +805,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.fingerprint),
+                    Icon(Icons.fingerprint, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("teacher Attendance"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -841,11 +831,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.password),
+                    Icon(Icons.password, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Change Password"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -868,11 +858,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.sms),
+                    Icon(Icons.sms, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("SMS Info"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -908,11 +898,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.sms),
+                    Icon(Icons.sms, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Student Msg Send"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -934,11 +924,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.add),
+                    Icon(Icons.add, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Set All Due"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -960,11 +950,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.developer_board),
+                    Icon(Icons.developer_board, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("Developer Info"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -1022,11 +1012,11 @@ var AdminEmail = "";
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.logout),
+                    Icon(Icons.logout, color: ColorName().appColor,),
                     SizedBox(width: 5,),
                     Text("LogOut"),
                     SizedBox(width: 5,),
-                    Icon(Icons.arrow_right_alt),
+                    Icon(Icons.arrow_right_alt, color: ColorName().appColor,),
                   ],
                 ),
                 
@@ -1150,6 +1140,7 @@ var AdminEmail = "";
                    Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                transform: Matrix4.translationValues(0.0, -60.0, 0.0),
                 height: 200,
                 child: Center(
                   child: Text("Total Student: ${AllStudent.length.toString()}", style: TextStyle(
@@ -1186,6 +1177,7 @@ var AdminEmail = "";
                    Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                transform: Matrix4.translationValues(0.0, -40.0, 0.0),
                 height: 200,
                 child: Center(
                   child: Padding(
