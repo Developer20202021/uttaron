@@ -8,7 +8,7 @@
 PRODUCT_NAME = uttaron
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.uttaron
+PRODUCT_BUNDLE_IDENTIFIER = com.inansoft.uttaron
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
