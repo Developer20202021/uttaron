@@ -395,7 +395,7 @@ var AdminEmail = "";
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
        automaticallyImplyLeading: false,
         title: const Text("Your Dashboard", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),),
-        backgroundColor: Colors.transparent,
+        backgroundColor: ColorName().appColor,
         bottomOpacity: 0.0,
         elevation: 0.0,
         centerTitle: true,
