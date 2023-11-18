@@ -66,6 +66,8 @@ dependencies:
   flutter_local_notifications: ^16.1.0
   rxdart: ^0.27.7
   flutter_timezone: ^1.0.8
+  animated_text_kit: ^4.2.2
+  upgrader: ^8.2.0
 
 
 dev_dependencies:

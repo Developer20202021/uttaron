@@ -24,6 +24,7 @@ import 'package:uttaron/Teachers/AllTeachers.dart';
 import 'package:uttaron/Teachers/GiveAttendanceTeacher.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:upgrader/upgrader.dart';
 
 
 
@@ -72,7 +73,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: ColorName().appColor),
         useMaterial3: true,
       ),
-      home: AdminLogInScreen(),
+      home: UpgradeAlert(child: AdminLogInScreen()),
     );
   }
 }

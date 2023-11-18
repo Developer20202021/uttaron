@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hive/hive.dart';
 import 'package:popover/popover.dart';
 import 'package:uttaron/AdminDashBoard/AllDueStudents.dart';
@@ -25,6 +26,9 @@ import 'package:uttaron/SMSInfo/smsinfo.dart';
 import 'package:uttaron/Settings/ChangePassword.dart';
 import 'package:uttaron/Teachers/AllTeachers.dart';
 import 'package:uttaron/Teachers/GiveAttendanceTeacher.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+
+
 
 
 class AdminDashboard extends StatefulWidget {
@@ -1060,41 +1064,117 @@ var AdminEmail = "";
         onRefresh: refresh,
         child: SingleChildScrollView(
       
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+
+                
+                  ClipPath(
+            clipper: BackgroundWaveClipper(),
+            child: Container(
+              child:         Center(
+                child: Container(
+                transform: Matrix4.translationValues(0.0, -30.0, 0.0),
+
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                
-                
-                     Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                  height: 200,
-                  child: Center(
-                    child: Text("Total Student: ${AllStudent.length.toString()}", style: TextStyle(
-                    
-                            fontSize: 20,
-                            color: Colors.white,
-                            overflow: TextOverflow.clip
-                          ),),
-                
-                
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 50,
+                  
+                  child: DefaultTextStyle(
+                    style:  TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.white,
+                      fontFamily: GoogleFonts.spaceGrotesk().fontFamily,
+                      fontWeight: FontWeight.bold
+                    ),
+                    child: AnimatedTextKit(
+                      
+                      repeatForever: true,
+                      animatedTexts: [
+                        TypewriterAnimatedText('Hi...'),
+                        TypewriterAnimatedText('${AdminName.toUpperCase()}'),
+                        TypewriterAnimatedText('Welcome to Uttaron Polytechnic Institute'),
+                        
+                      ],
+                      onTap: () {
+                        print("Tap Event");
+                      },
+                    ),
                   ),
-                       
-                 decoration: BoxDecoration(
-                  color: Color(0xF0B75CFF),
+                ),
+                ),
+                ),
+              ),
+              width: MediaQuery.of(context).size.width,
+              height: 180,
+              decoration: BoxDecoration(
                 
-                  border: Border.all(
-                            width: 2,
-                            color: Color(0xF0B75CFF)
-                          ),
-                  borderRadius: BorderRadius.circular(10)      
+                color: ColorName().appColor
+                ),
+            ),
+          ),
+
+
+
+
+
+          Center(
+
+                child: Container(
+
+                  
+                  transform: Matrix4.translationValues(0.0, -100.0, 0.0),
+
+                  child: CircleAvatar(
+                radius: 60,
+
+                backgroundImage:
+                    NetworkImage("${photoUrl}"),
+                backgroundColor: Colors.transparent,
+                
+              
+              ),
+                         
+                         
+                         
+                
+                ),
+                ),
+
+
+
+                
+                
+                   Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                height: 200,
+                child: Center(
+                  child: Text("Total Student: ${AllStudent.length.toString()}", style: TextStyle(
+                  
+                          fontSize: 20,
+                          color: Colors.white,
+                          overflow: TextOverflow.clip
+                        ),),
+                
+                
+                ),
+                     
+                 decoration: BoxDecoration(
+                color: Colors.pink.shade300,
+                
+                border: Border.all(
+                          width: 2,
+                          color: Colors.pink.shade300
+                        ),
+                borderRadius: BorderRadius.circular(10)      
                  ),)),
                 
                 
                  SizedBox(
-                  height: 10,
+                height: 10,
                  ),
                 
                 
@@ -1103,28 +1183,120 @@ var AdminEmail = "";
                 
                 
                  
-                     Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                  height: 200,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: Column(
-                        children: [
-                          Text("Total Due Student: ${AllDueStudentData.length.toString()}", style: TextStyle(
-                    
-                            fontSize: 20,
-                            color: Colors.white,
-                            overflow: TextOverflow.clip
-                          ),).animate(autoPlay: true) .fade(duration: 1000.ms)
+                   Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                height: 200,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Column(
+                      children: [
+                        Text("Total Due Student: ${AllDueStudentData.length.toString()}", style: TextStyle(
+                  
+                          fontSize: 20,
+                          color: Colors.white,
+                          overflow: TextOverflow.clip
+                        ),).animate(autoPlay: true) .fade(duration: 1000.ms)
   .scale(delay: 1000.ms).move(delay: 300.ms, duration: 600.ms),
-                    
-                    
-                                
-                                
-                    SizedBox(
-                  height: 17,
+                  
+                  
+                              
+                              
+                  SizedBox(
+                height: 17,
+                               ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Row(
+                                          
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            
+                            
+                            children: [
+                                          
+                                          
+                                        Container(width: 100, child:TextButton(onPressed: (){
+                              
+                              
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDueStudents(indexNumber: "")));
+                              
+                              
+                              
+                              
+                              
+                                        }, child: Text("View", style: TextStyle(color: Theme.of(context).primaryColor),), style: ButtonStyle(
+                             
+                                        backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
+                                      ),),),
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                            ],),
+                        )
+                      ],
+                    ),
+                  ),
+                              
+                              
+                ),
+                     
+                               decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                              
+                border: Border.all(
+                          width: 2,
+                          color: Theme.of(context).primaryColor
+                        ),
+                borderRadius: BorderRadius.circular(10)      
+                               ),)),
+                
+                
+                 SizedBox(
+                height: 10,
+                 ),
+                
+                
+                
+                
+                
+                 
+                   Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                height: 200,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Column(
+                      children: [
+                        Text("Total Paid Student: ${AllPaidStudentData.length.toString()}", style: TextStyle(
+                  // ${moneyAdd.toString()}
+                          fontSize: 20,
+                          color:Colors.white,
+                          overflow: TextOverflow.clip
+                         
+                        ),).animate(autoPlay: true) .fade(duration: 1000.ms)
+  .scale(delay: 1000.ms).move(delay: 300.ms, duration: 600.ms),
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                           SizedBox(
+                                  height: 17,
                                  ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
@@ -1138,15 +1310,18 @@ var AdminEmail = "";
                                             
                                             
                                           Container(width: 100, child:TextButton(onPressed: (){
-                                
-                                
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDueStudents(indexNumber: "")));
-                                
-                                
-                                
-                                
-                                
-                                          }, child: Text("View", style: TextStyle(color: Theme.of(context).primaryColor),), style: ButtonStyle(
+                
+                
+                
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
+                
+                
+                
+                
+                
+                
+                
+                                          }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
                                
                                           backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
                                         ),),),
@@ -1162,138 +1337,78 @@ var AdminEmail = "";
                                             
                               ],),
                           )
-                        ],
-                      ),
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                      ],
                     ),
-                                
-                                
                   ),
-                       
-                                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                                
-                  border: Border.all(
-                            width: 2,
-                            color: Theme.of(context).primaryColor
-                          ),
-                  borderRadius: BorderRadius.circular(10)      
-                                 ),)),
                 
                 
-                 SizedBox(
-                  height: 10,
-                 ),
-                
-                
-                
-                
-                
-                 
-                     Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                  height: 200,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: Column(
-                        children: [
-                          Text("Total Paid Student: ${AllPaidStudentData.length.toString()}", style: TextStyle(
-                    // ${moneyAdd.toString()}
-                            fontSize: 20,
-                            color:Colors.white,
-                            overflow: TextOverflow.clip
-                           
-                          ),).animate(autoPlay: true) .fade(duration: 1000.ms)
-  .scale(delay: 1000.ms).move(delay: 300.ms, duration: 600.ms),
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                             SizedBox(
-                                    height: 17,
-                                   ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: Row(
-                                              
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                
-                                
-                                children: [
-                                              
-                                              
-                                            Container(width: 100, child:TextButton(onPressed: (){
-                
-                
-                
-                                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => AllDepartment()));
-                
-                
-                
-                
-                
-                
-                
-                                            }, child: Text("View", style: TextStyle(color: Color.fromARGB(255, 242,133,0)),), style: ButtonStyle(
-                                 
-                                            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white),
-                                          ),),),
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                              
-                                ],),
-                            )
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                        ],
-                      ),
-                    ),
-                
-                
-                  ),
-                       
+                ),
+                     
                  decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 242,133,0),
+                color: Color.fromARGB(255, 242,133,0),
                 
-                  border: Border.all(
-                            width: 2,
-                            color: Color.fromARGB(255, 242,133,0)
-                          ),
-                  borderRadius: BorderRadius.circular(10)      
+                border: Border.all(
+                          width: 2,
+                          color: Color.fromARGB(255, 242,133,0)
+                        ),
+                borderRadius: BorderRadius.circular(10)      
                  ),)),
                 
                 
                  SizedBox(
-                  height: 10,
+                height: 10,
                  ),
                 
                 
       
               
-                    ]))),
+                  ])),
       ));
   }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+class BackgroundWaveClipper extends CustomClipper<Path> {
+  @override
+Path getClip(Size size) {
+    var path = Path();
+
+    final p0 = size.height * 0.95;
+    path.lineTo(0.0, p0);
+
+    final controlPoint = Offset(size.width * 0.4, size.height);
+    final endPoint = Offset(size.width, size.height / 4);
+    path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, endPoint.dx, endPoint.dy);
+
+    path.lineTo(size.width, 0.0);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(BackgroundWaveClipper oldClipper) =>
+      oldClipper != this;
 }
