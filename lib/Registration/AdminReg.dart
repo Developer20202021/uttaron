@@ -39,6 +39,8 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
   String RegCode ="uttaron123";
 
+  var RegCodeTextField ="";
+
 
 
   // All Error Message Show
@@ -325,9 +327,14 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         checkPasswordTextField();
                         checkPhoneNumberTextField();
 
-                        setState(() {
-                          myAdminNameController.text =value;
-                        });
+
+                        // For Android 
+
+                        // setState(() {
+                        //   myAdminNameController.text =value;
+                        // });
+
+
                       },
                     
 
@@ -389,9 +396,12 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         checkPasswordTextField();
                         checkPhoneNumberTextField();
 
-                        setState(() {
-                          myPhoneNumberController.text =value;
-                        });
+
+                         // For Android 
+
+                        // setState(() {
+                        //   myPhoneNumberController.text =value;
+                        // });
 
 
 
@@ -449,9 +459,12 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         checkPasswordTextField();
                         checkPhoneNumberTextField();
 
-                        setState(() {
-                          myEmailController.text = value;
-                        });
+
+                         // For Android 
+
+                        // setState(() {
+                        //   myEmailController.text = value;
+                        // });
 
 
                       },
@@ -503,9 +516,12 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         checkPasswordTextField();
                         checkPhoneNumberTextField();
 
-                        setState(() {
-                          myAddressController.text = value;
-                        });
+
+                         // For Android 
+
+                        // setState(() {
+                        //   myAddressController.text = value;
+                        // });
 
 
 
@@ -574,9 +590,13 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                         checkPasswordTextField();
                         checkPhoneNumberTextField();
 
-                        setState(() {
-                          myPassController.text =value;
-                        });
+                         // For Android 
+
+                        // setState(() {
+                        //   myPassController.text =value;
+                        // });
+
+
                       },
                       
                       decoration: InputDecoration(
@@ -625,9 +645,19 @@ class _AdminRegistrationState extends State<AdminRegistration> {
                 onChanged: (value) {
 
 
+
                   setState(() {
-                    RegCodeController.text = value;
+                    RegCodeTextField =value.trim().toLowerCase();
                   });
+
+
+
+                   // For Android 
+
+
+                  // setState(() {
+                  //   RegCodeController.text = value;
+                  // });
 
                   
                 },
@@ -670,8 +700,9 @@ class _AdminRegistrationState extends State<AdminRegistration> {
 
 
 
+      // যদি Android হয় তখন নিচে RegCodeTextField change করে RegCodeController.text.trim().tolowerCase() ব্যবহার করতে হবে। 
             
-                   RegCode==RegCodeController.text.trim().toLowerCase() && myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty? Row(
+                   RegCode==RegCodeTextField && myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{

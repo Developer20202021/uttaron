@@ -44,6 +44,8 @@ class _StudentRegistrationState extends State<StudentRegistration> {
   String errorTxt = "";
 
   String RegCode ="uttaron123";
+  
+  var RegCodeTextField ="";
 
 
 
@@ -421,9 +423,14 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          myAdminNameController.text =value;
-                        });
+
+                        // For Android 
+
+                        // setState(() {
+                        //   myAdminNameController.text =value;
+                        // });
+
+
                       },
                       
                       decoration: InputDecoration(
@@ -488,9 +495,13 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          myPhoneNumberController.text =value;
-                        });
+
+
+                        // For Android 
+
+                        // setState(() {
+                        //   myPhoneNumberController.text =value;
+                        // });
 
 
 
@@ -553,9 +564,12 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          myEmailController.text = value;
-                        });
+
+                        // For Android 
+
+                        // setState(() {
+                        //   myEmailController.text = value;
+                        // });
 
 
                       },
@@ -615,9 +629,14 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          myAddressController.text = value;
-                        });},
+                        // For Android 
+
+                        // setState(() {
+                        //   myAddressController.text = value;
+                        // });
+                        
+                        
+                        },
 
 
 
@@ -691,10 +710,13 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
+                        // For Android 
 
-                        setState(() {
-                          myPassController.text =value;
-                        });
+                        // setState(() {
+                        //   myPassController.text =value;
+                        // });
+
+
                       },
                       
                       decoration: InputDecoration(
@@ -944,9 +966,13 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          FatherPhoneNoController.text =value;
-                        });
+                        // For Android 
+
+                        // setState(() {
+                        //   FatherPhoneNoController.text =value;
+                        // });
+
+
                       },
 
 
@@ -1057,9 +1083,11 @@ var code = Random().nextInt(900000) + 100000;
                         checkCourseFeeTextField();
                         checkIDTextField();
 
-                        setState(() {
-                          CourseFeeController.text = value;
-                        });
+                        // For Android 
+
+                        // setState(() {
+                        //   CourseFeeController.text = value;
+                        // });
 
 
                       },
@@ -1131,9 +1159,13 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-                        setState(() {
-                          IDNoController.text = value;
-                        });
+                        // For Android 
+
+
+
+                        // setState(() {
+                        //   IDNoController.text = value;
+                        // });
 
 
                       },
@@ -1350,8 +1382,16 @@ var code = Random().nextInt(900000) + 100000;
 
 
                   setState(() {
-                    RegCodeController.text = value;
+                    RegCodeTextField = value.trim().toLowerCase();
                   });
+
+
+                  // For Android 
+
+
+                  // setState(() {
+                  //   RegCodeController.text = value;
+                  // });
 
                   
                 },
@@ -1412,9 +1452,9 @@ var code = Random().nextInt(900000) + 100000;
 
 
 
-
+// যদি Android হয় তখন নিচে RegCodeTextField change করে RegCodeController.text.trim().tolowerCase() ব্যবহার করতে হবে। 
             
-                    RegCode==RegCodeController.text.trim().toLowerCase()&& myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty && IDNoController.text.isNotEmpty && CourseFeeController.text.isNotEmpty && FatherPhoneNoController.text.isNotEmpty && SelectedValue.isNotEmpty && SelectedSemisterValue.isNotEmpty && SelectedCategory.isNotEmpty?Row(
+                    RegCode==RegCodeTextField&& myPassController.text.isNotEmpty && myAddressController.text.isNotEmpty && myAdminNameController.text.isNotEmpty && myPhoneNumberController.text.isNotEmpty && myEmailController.text.isNotEmpty && IDNoController.text.isNotEmpty && CourseFeeController.text.isNotEmpty && FatherPhoneNoController.text.isNotEmpty && SelectedValue.isNotEmpty && SelectedSemisterValue.isNotEmpty && SelectedCategory.isNotEmpty?Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(width: 150, child:TextButton(onPressed: () async{
